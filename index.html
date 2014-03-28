@@ -28,7 +28,7 @@
 		flyMem[2] = new Person('Charles') ;
 		flyMem[3] = new Person('David') ;
 		flyMem[4] = new Person(' Rebeca ') ;
-		flyMem[5] = new Person('  Thomas ');
+		flyMem[5] = new Person('  Thomas');
 		flyMem[6] = new Person('   Frank ');
 		flyMem[7] = new Person(' Sam') ;
 		flyMem[8] = new Person('    Sophia ');
@@ -36,6 +36,12 @@
 
 	for( var i = 0; i<10;i++)
 	{
+		// Add parents to elements to test clearly
+		if(i !=0 && i%2 ==5)
+				flyMem[i].parent = i % 2;
+			if(i !=0 && i%2 !=5)
+				flyMem[i].parent =i & 2;
+				
 			document.write ('<div class = "div_txt">' + flyMem[i].name + flyMem[i].parent + '</div>');
 	}
 
