@@ -107,22 +107,14 @@ $(document).ready(function(){
 	$("#btn_Get_Grand_Node").click(function(){
 		
 		var id_flyMem = $("#selectParent").val();
-		flyMem[id_flyMem].parent = null;
-		flyMem[id_flyMem].name = null;
-		flyMem[id_flyMem].child = false;
-		for(var key in flyMem)
+
+		if(flyMem[id_flyMem].parent !=null &&flyMem[flyMem[id_flyMem].parent].parent !=null )
 		{
-			if( flyMem[key].parent == id_flyMem)
-			{
-				flyMem[key].name = null;
-				flyMem[key].parent = null;
-				flyMem[id_flyMem].child = false;
-			}
-			
-			
-		
+			alert("parent exist!");
 		}
-	
+		else
+			alert("Grand parent does not exist!");
+		
 		ClearVal();
 		
 	});	
