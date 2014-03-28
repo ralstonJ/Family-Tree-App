@@ -32,10 +32,33 @@ $(document).ready(function(){
 	
 		var txtMemName = $('input:text[id="txtMemName"]').val();
 		flyMem[i++] = new Person(txtMemName);
-		$(".div_txt").append(" <div>" + flyMem[i-1].name + "</div>");
+		$(".div_txt").append(" <p id='p_mem_name_" +(i-1)+"'>" + flyMem[i-1].name +  " " +  "</p>");
+		var id_div_mem_name = "#p_mem_name_" + (i-1);
+		var test = $('<button/>',
+			{
+				id: 'btn_add_child_'+(i-1),
+				text: 'Add Child',
+				click: function () { 
+					var id_btn = $(this).attr('id');	
+					var iFlyMem = id_btn.replace('btn_add_child_','');
+					var txtAddChild = 	id_btn.replace('btn_add_child_','txt_add_child_');
+		
+					var tmp_Txt_Child = "input:text[id='"+ txtAddChild +"']" ;
+					var txtMemName = $(tmp_Txt_Child).val();
+					flyMem[i++] = new Person(txtMemName);
+					$(".div_txt").append(" <p id='p_mem_name_" +(i-1)+"'>" + flyMem[i-1].name +  " " +  "</p>"); 
+					$(id_div_mem_name).append(test);
+					$(id_div_mem_name).append("<input type ='text' id='txt_add_child_"+(i-1)+"'> </input> ");
+				}
+			});
+		$(id_div_mem_name).append(test);
+		$(id_div_mem_name).append("<input type ='text' id='txt_add_child_"+(i-1)+"'> </input> ");	
 	});
+	
   
   });
+  
+  
   
   
 	/*
