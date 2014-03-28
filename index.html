@@ -51,10 +51,24 @@
 	// Delete only node 2
 	
 	flyMem[2].parent = null;
+	// After Delete
+	document.write ('</br>');
+	document.write ('<div class = "div_txt">After Delete Members</div>');
+
+
+	for(var key in flyMem)
+
+	{
+			document.write ('<div class = "div_txt">' + flyMem[key].name + flyMem[key].parent + '</div>');
+	}
 	
+		document.write ('</br>');
+	document.write ('<div class = "div_txt">Deleted Members</div>');
+
 	for(var key in flyMem)
 	{
-	document.write ('<div class = "div_txt">' + flyMem[key].name + flyMem[key].parent +'</div>');
+	if( flyMem[key].parent != null || flyMem[parseInt(flyMem[key].parent)].parent == null )
+			 	document.write ('<div class = "div_txt">' + flyMem[key].name + flyMem[key].parent +'</div>');
 	
 	}
 	
