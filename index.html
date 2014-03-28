@@ -37,10 +37,10 @@
 	for( var i = 0; i<10;i++)
 	{
 		// Add parents to elements to test clearly
-		if(i !=0 && i%2 ==5)
-				flyMem[i].parent = i % 2;
-			if(i !=0 && i%2 !=5)
-				flyMem[i].parent =i & 2;
+		if(i !=0 && i%2 ==0)
+				flyMem[i].parent = 0;
+		if(i !=0 && i%2 !=0)
+				flyMem[i].parent = 3;
 				
 			document.write ('<div class = "div_txt">' + flyMem[i].name + flyMem[i].parent + '</div>');
 	}
@@ -62,7 +62,7 @@
 			document.write ('<div class = "div_txt">' + flyMem[key].name + flyMem[key].parent + '</div>');
 	}
 	
-		document.write ('</br>');
+	document.write ('</br>');
 	document.write ('<div class = "div_txt">Deleted Members</div>');
 
 	for(var key in flyMem)
@@ -72,14 +72,7 @@
 	
 	}
 	
-	for(var key in flyMem)
-	{
-		
-
-		document.write ('<div class = "div_txt">' + flyMem[i].name + flyMem[i].parent + '</div>');
 	
-	}
-
 	</script>
 
 </div>
