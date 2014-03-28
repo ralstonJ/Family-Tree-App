@@ -67,7 +67,7 @@
 
 	for(var key in flyMem)
 	{
-	if( flyMem[key].parent != null || flyMem[parseInt(flyMem[key].parent)].parent == null )
+	if( flyMem[key].parent != null && flyMem[parseInt(flyMem[key].parent)].parent == null )
 			 	document.write ('<div class = "div_txt">' + flyMem[key].name + flyMem[key].parent +'</div>');
 	
 	}
