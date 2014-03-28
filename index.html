@@ -40,9 +40,11 @@ $(document).ready(function(){
 			$("select").empty();
 		$(".div_display").empty();
 		for(var key in flyMem){
-			
-			$("select").append("<option value='"+key+"'>"+ flyMem[key].name +"</option>");
-			$(".div_display").append("<p>" + flyMem[key].name + " " + flyMem[key].parent +"</p>");	
+			if(flyMem[key].name != null)
+			{
+				$("select").append("<option value='"+key+"'>"+ flyMem[key].name +"</option>");
+				$(".div_display").append("<p>" + flyMem[key].name + " " + flyMem[key].parent +"</p>");	
+			}
 		}
 		
 		$("input").val('');
@@ -110,56 +112,16 @@ $(document).ready(function(){
 
 		if(flyMem[id_flyMem].parent !=null &&flyMem[flyMem[id_flyMem].parent].parent !=null )
 		{
-			alert("parent exist!");
+			alert("Grand parent exist!");
 		}
 		else
 			alert("Grand parent does not exist!");
-		
 		ClearVal();
+	
+		$(".div_display").append("<p>Grand Parent of " +flyMem[id_flyMem].name + " is " + flyMem[flyMem[flyMem[id_flyMem].parent].parent].name + " </p>");
 		
 	});	
   });
-  
-  
-  
-  
-  // Delete 
-  
-  
-  
-	/*
-	for( var i = 0; i<10;i++)
-	{
-			document.write ('<div class = "div_txt">' + flyMem[i].name + flyMem[i].parent + '</div>');
-	}
-
-	
-	document.write ('</br>');
-	document.write ('<div class = "div_txt">Delete Members</div>');
-	// Delete only node 2
-	
-	flyMem[1].parent = null;
-	// After Delete
-	document.write ('</br>');
-	document.write ('<div class = "div_txt">After Delete Members</div>');
-
-
-	for(var key in flyMem)
-
-	{
-			document.write ('<div class = "div_txt">' + flyMem[key].name + flyMem[key].parent + '</div>');
-	}
-	
-	document.write ('</br>');
-	document.write ('<div class = "div_txt">Deleted Members</div>');
-
-	for(var key in flyMem)
-	{
-	if(  (key >0 && flyMem[key].parent > 0 && flyMem[key].parent != null &&  flyMem[(flyMem[key].parent)].parent == null) || (key > 0 && flyMem[key].parent == null )  )  
-			 	document.write ('<div class = "div_txt">' + flyMem[key].name + flyMem[key].parent +'</div>');
-	
-	}
-	*/
 	
 	</script>
 
