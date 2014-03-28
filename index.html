@@ -1,6 +1,8 @@
 <html>
 <head>
 <title>Family Tree App by Ralston ALmeida </title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+</script>
 <link rel="icon" type="image/png" href="./icon.png">
 <link type="text/css" rel="stylesheet" href="Home.css" />
 
@@ -9,39 +11,36 @@
 <body>
 <div class="top-div">
 <div class="div_txt"> Welcome to Family Tree</div>
-<button></button> 
+<input type="text"  id="txtMemName"></input>
+<button id="ok_button"> ok</button> 
 <script>
 
-
+$(document).ready(function(){
+	
+	var i = 0
+	var flyMem = new Array();
+	
 	function Person(name) 
 	{
 		this.parent = null;
 		this.name = name;
 	}
 
-	var flyMem = new Array();
-	var name;
 	
-	
-		flyMem[0] = new Person('Randall') ;
-		flyMem[1] = new Person('Betty ') ;
-		flyMem[2] = new Person('Charles') ;
-		flyMem[3] = new Person('David') ;
-		flyMem[4] = new Person(' Rebeca ') ;
-		flyMem[5] = new Person('  Thomas');
-		flyMem[6] = new Person('   Frank ');
-		flyMem[7] = new Person(' Sam') ;
-		flyMem[8] = new Person('    Sophia ');
-		flyMem[9] = new Person(' Mary ') ;	
 
+	$("#ok_button").click(function(){
+	
+		var txtMemName = $('input:text[id="txtMemName"]').val();
+		flyMem[i++] = new Person(txtMemName);
+		$(".div_txt").append(" <div>" + flyMem[i-1].name + "</div>");
+	});
+  
+  });
+  
+  
+	/*
 	for( var i = 0; i<10;i++)
 	{
-		// Add parents to elements to test clearly
-		if(i !=0 && i%2 ==0 ) 
-				flyMem[i].parent = 0;
-		if(i !=0 && i%2 !=0 && i!= 3)
-				flyMem[i].parent = 3;
-				
 			document.write ('<div class = "div_txt">' + flyMem[i].name + flyMem[i].parent + '</div>');
 	}
 
@@ -50,7 +49,7 @@
 	document.write ('<div class = "div_txt">Delete Members</div>');
 	// Delete only node 2
 	
-	flyMem[3].parent = null;
+	flyMem[1].parent = null;
 	// After Delete
 	document.write ('</br>');
 	document.write ('<div class = "div_txt">After Delete Members</div>');
@@ -71,7 +70,7 @@
 			 	document.write ('<div class = "div_txt">' + flyMem[key].name + flyMem[key].parent +'</div>');
 	
 	}
-	
+	*/
 	
 	</script>
 
