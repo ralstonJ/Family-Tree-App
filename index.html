@@ -45,6 +45,8 @@
 			document.write ('<div class = "div_txt">' + flyMem[i].name + flyMem[i].parent + '</div>');
 	}
 
+	
+	document.write ('</br>');
 	document.write ('<div class = "div_txt">Delete Members</div>');
 	// Delete only node 2
 	
@@ -52,10 +54,6 @@
 	
 	for(var key in flyMem)
 	{
-	document.write ('<div class = "div_txt">' + flyMem[key].name + flyMem[key].parent +'</div>');
-	// working on delete logic now
-	if(flyMem[key].parent != 'abd1'   && flyMem[parseInt(flyMem[key].parent)].parent == null  ) 
-		flyMem[key].parent = null;
 	document.write ('<div class = "div_txt">' + flyMem[key].name + flyMem[key].parent +'</div>');
 	
 	}
