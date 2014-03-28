@@ -11,8 +11,10 @@
 <body>
 <div class="top-div">
 <div class="div_txt"> Welcome to Family Tree</div>
+
+
 <input type="text"  id="txtMemName"></input>
-<button id="ok_button"> ok</button> 
+<button id="ok_button">Add Parent Node</button> 
 <script>
 
 $(document).ready(function(){
@@ -42,16 +44,20 @@ $(document).ready(function(){
 					var id_btn = $(this).attr('id');	
 					var iFlyMem = id_btn.replace('btn_add_child_','');
 					var txtAddChild = 	id_btn.replace('btn_add_child_','txt_add_child_');
-		
+					
 					var tmp_Txt_Child = "input:text[id='"+ txtAddChild +"']" ;
 					var txtMemName = $(tmp_Txt_Child).val();
 					flyMem[i++] = new Person(txtMemName);
+					flyMem[i-1].parent = iFlyMem;
 					$(".div_txt").append(" <p id='p_mem_name_" +(i-1)+"'>" + flyMem[i-1].name +  " " +  "</p>"); 
-					$(id_div_mem_name).append(test);
+					$(id_div_mem_name).append($(this));
+					
 				}
 			});
-		$(id_div_mem_name).append(test);
-		$(id_div_mem_name).append("<input type ='text' id='txt_add_child_"+(i-1)+"'> </input> ");	
+	
+		$(id_div_mem_name).append("<input type ='text' id='txt_add_child_"+(i-1)+"'> </input> ");
+		
+			$(id_div_mem_name).append(test);	
 	});
 	
   
