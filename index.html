@@ -15,6 +15,8 @@
 <select id="selectParent"> </select>
 <input type="text"  id="txtMemName"></input>
 <button>Add Node</button> 
+<div class="div_display">
+</div>
 <script>
 $(document).ready(function(){
 	
@@ -45,14 +47,15 @@ $(document).ready(function(){
 		}
 		
 		$("select").empty();
-		
+		$(".div_display").empty();
 		for(var key in flyMem){
 		
 			$("select").append("<option value='"+key+"'>"+ flyMem[key].name +"</option>");
-		
+			$(".div_display").append("<p>" + flyMem[key].name + " " + flyMem[key].parent +"</p>");	
 		}
 		
-		
+		$("input").val('');
+				
 	});
 	
   
@@ -98,6 +101,10 @@ $(document).ready(function(){
 	</script>
 
 </div>
+
+<div class="display relation">
+
+<div>
 	
 </body>
 
