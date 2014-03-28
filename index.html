@@ -14,7 +14,8 @@
 
 <select id="selectParent"> </select>
 <input type="text"  id="txtMemName"></input>
-<button>Add Node</button> 
+<button id="btn_Add">Add Node</button> 
+<button id="btn_Rename">Rename Node</button>
 <div class="div_display">
 </div>
 <script>
@@ -30,12 +31,29 @@ $(document).ready(function(){
 		this.child = false;
 	}
 
+	
+	function ClearVal(){
+	
+			$("select").empty();
+		$(".div_display").empty();
+		for(var key in flyMem){
+		
+			$("select").append("<option value='"+key+"'>"+ flyMem[key].name +"</option>");
+			$(".div_display").append("<p>" + flyMem[key].name + " " + flyMem[key].parent +"</p>");	
+		}
+		
+		$("input").val('');
+
+	
+	}
+	
 	var options = $("option");
 	$.each(flyMem, function() {
     options.append($("<option />").val(this.ImageFolderID).text(this.Name));
 	});
+
 	
-	$("button").click(function(){
+	$("#btn_Add").click(function(){
 	
 		var txtMemName = $('input:text[id="txtMemName"]').val();
 		flyMem[i++] = new Person(txtMemName);
@@ -46,18 +64,19 @@ $(document).ready(function(){
 			flyMem[$( "#selectParent option:selected" ).val()].child = true; 
 		}
 		
-		$("select").empty();
-		$(".div_display").empty();
-		for(var key in flyMem){
-		
-			$("select").append("<option value='"+key+"'>"+ flyMem[key].name +"</option>");
-			$(".div_display").append("<p>" + flyMem[key].name + " " + flyMem[key].parent +"</p>");	
-		}
-		
-		$("input").val('');
-				
+					ClearVal();
 	});
 	
+	$("#btn_Rename").click(function(){
+		
+		var txtMemName = $('input:text[id="txtMemName"]').val();
+		var id_flyMem = $("#selectParent").val();
+		flyMem[id_flyMem].name = txtMemName;
+		
+		
+					ClearVal();
+
+	});
   
   });
   // Delete 
@@ -102,10 +121,6 @@ $(document).ready(function(){
 
 </div>
 
-<div class="display relation">
-
-<div>
-	
 </body>
 
 </html>
