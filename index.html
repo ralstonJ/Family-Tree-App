@@ -16,6 +16,9 @@
 <input type="text"  id="txtMemName"></input>
 <button id="btn_Add">Add Node</button> 
 <button id="btn_Rename">Rename Node</button>
+<button id="btn_Delete">Delete Node</button>
+<button id="btn_Get_Grand_Node">Get Grand-Parent Node</button>
+
 <div class="div_display">
 </div>
 <script>
@@ -31,19 +34,18 @@ $(document).ready(function(){
 		this.child = false;
 	}
 
-	
+		// function to clear objects from <select> and re-load. Also clear TextBox
 	function ClearVal(){
 	
 			$("select").empty();
 		$(".div_display").empty();
 		for(var key in flyMem){
-		
+			
 			$("select").append("<option value='"+key+"'>"+ flyMem[key].name +"</option>");
 			$(".div_display").append("<p>" + flyMem[key].name + " " + flyMem[key].parent +"</p>");	
 		}
 		
 		$("input").val('');
-
 	
 	}
 	
@@ -64,7 +66,7 @@ $(document).ready(function(){
 			flyMem[$( "#selectParent option:selected" ).val()].child = true; 
 		}
 		
-					ClearVal();
+		ClearVal();
 	});
 	
 	$("#btn_Rename").click(function(){
@@ -74,11 +76,61 @@ $(document).ready(function(){
 		flyMem[id_flyMem].name = txtMemName;
 		
 		
-					ClearVal();
+		ClearVal();
 
 	});
   
+  
+	$("#btn_Delete").click(function(){
+		
+		var id_flyMem = $("#selectParent").val();
+		flyMem[id_flyMem].parent = null;
+		flyMem[id_flyMem].name = null;
+		flyMem[id_flyMem].child = false;
+		for(var key in flyMem)
+		{
+			if( flyMem[key].parent == id_flyMem)
+			{
+				flyMem[key].name = null;
+				flyMem[key].parent = null;
+				flyMem[id_flyMem].child = false;
+			}
+			
+			
+		
+		}
+	
+		ClearVal();
+		
+	});
+	
+	$("#btn_Get_Grand_Node").click(function(){
+		
+		var id_flyMem = $("#selectParent").val();
+		flyMem[id_flyMem].parent = null;
+		flyMem[id_flyMem].name = null;
+		flyMem[id_flyMem].child = false;
+		for(var key in flyMem)
+		{
+			if( flyMem[key].parent == id_flyMem)
+			{
+				flyMem[key].name = null;
+				flyMem[key].parent = null;
+				flyMem[id_flyMem].child = false;
+			}
+			
+			
+		
+		}
+	
+		ClearVal();
+		
+	});	
   });
+  
+  
+  
+  
   // Delete 
   
   
