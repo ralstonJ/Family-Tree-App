@@ -21,11 +21,19 @@
 
 	var flyMem = new Array();
 	var name;
+	
+	
 
 	for( var i = 0; i<5;i++)
 	{
+	
 		name = "abd" + i;
+	
 		flyMem[i] = new Person(name);
+		
+		if(i>0)
+		flyMem[i].parent  = "abd" + Math.floor((Math.random()*2)+1); 
+		
 		document.write ('<div class = "div_txt">' + flyMem[i].name + flyMem[i].parent + '</div>');
 	}
 
