@@ -12,11 +12,10 @@
 <div class="top-div">
 <div class="div_txt"> Welcome to Family Tree</div>
 
-
+<select id="selectParent"> </select>
 <input type="text"  id="txtMemName"></input>
-<button id="ok_button">Add Parent Node</button> 
+<button>Add Node</button> 
 <script>
-
 $(document).ready(function(){
 	
 	var i = 0
@@ -26,38 +25,34 @@ $(document).ready(function(){
 	{
 		this.parent = null;
 		this.name = name;
+		this.child = false;
 	}
 
+	var options = $("option");
+	$.each(flyMem, function() {
+    options.append($("<option />").val(this.ImageFolderID).text(this.Name));
+	});
 	
-
-	$("#ok_button").click(function(){
+	$("button").click(function(){
 	
 		var txtMemName = $('input:text[id="txtMemName"]').val();
 		flyMem[i++] = new Person(txtMemName);
-		$(".div_txt").append(" <p id='p_mem_name_" +(i-1)+"'>" + flyMem[i-1].name +  " " +  "</p>");
-		var id_div_mem_name = "#p_mem_name_" + (i-1);
-		var test = $('<button/>',
-			{
-				id: 'btn_add_child_'+(i-1),
-				text: 'Add Child',
-				click: function () { 
-					var id_btn = $(this).attr('id');	
-					var iFlyMem = id_btn.replace('btn_add_child_','');
-					var txtAddChild = 	id_btn.replace('btn_add_child_','txt_add_child_');
-					
-					var tmp_Txt_Child = "input:text[id='"+ txtAddChild +"']" ;
-					var txtMemName = $(tmp_Txt_Child).val();
-					flyMem[i++] = new Person(txtMemName);
-					flyMem[i-1].parent = iFlyMem;
-					$(".div_txt").append(" <p id='p_mem_name_" +(i-1)+"'>" + flyMem[i-1].name +  " " +  "</p>"); 
-					$(id_div_mem_name).append($(this));
-					
-				}
-			});
 	
-		$(id_div_mem_name).append("<input type ='text' id='txt_add_child_"+(i-1)+"'> </input> ");
+		if($( "#selectParent option:selected" ).text())
+		{		
+			flyMem[i-1].parent =  $("#selectParent").val();
+			flyMem[$( "#selectParent option:selected" ).val()].child = true; 
+		}
 		
-			$(id_div_mem_name).append(test);	
+		$("select").empty();
+		
+		for(var key in flyMem){
+		
+			$("select").append("<option value='"+key+"'>"+ flyMem[key].name +"</option>");
+		
+		}
+		
+		
 	});
 	
   
