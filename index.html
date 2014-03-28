@@ -8,10 +8,31 @@
 
 <body>
 <div class="top-div">
-<div class="myName"><p><h3 class="h3_txt">Family tree  -- Work in Progress</h3></p></div>
+<div class="div_txt"> Welcome to Family Tree</div>
+<script>
+
+
+	function Person(name) 
+	{
+		this.name = name;
+	}
+
+	var flyMem = new Array();
+	var name;
+
+	for( var i = 0; i<5;i++)
+	{
+		name = "abd" + i;
+		flyMem[i] = new Person(name);
+		document.write ('<div class = "div_txt">' + flyMem[i].name + '</div>');
+	}
+
+	document.write ('<div class = "div_txt">Delete Members</div>');
+
+
+</script>
+
 </div>
-	<div class="center-div">
-	</div>
 	
 </body>
 
