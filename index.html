@@ -32,14 +32,29 @@
 		flyMem[i] = new Person(name);
 		
 		if(i>0)
-		flyMem[i].parent  = "abd" + Math.floor((Math.random()*2)+1); 
+		flyMem[i].parent  = Math.floor((Math.random()*2)+1) ; 
 		
 		document.write ('<div class = "div_txt">' + flyMem[i].name + flyMem[i].parent + '</div>');
 	}
 
 	document.write ('<div class = "div_txt">Delete Members</div>');
+	// Delete only node 2
+	
+	flyMem[2].parent = null;
+	foreach( key in flyMem)
+	{
+	// working on delete logic now
+	if( key.parent ) 
+	
+	}
+	
+	
+	for( var i = 0; i<5;i++)
+	{	
 
-
+		document.write ('<div class = "div_txt">' + flyMem[i].name + flyMem[i].parent + '</div>');
+	
+	}
 </script>
 
 </div>
