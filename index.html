@@ -38,9 +38,10 @@
 
 			// function to clear objects from <select> and re-load. Also clear TextBox
 		function ClearVal(){
-		
-				$("select").empty();
+
+			$("select").empty();
 			$(".div_display").empty();
+			
 			for(var key in flyMem){
 				if(flyMem[key].name != null)
 				{
@@ -50,15 +51,14 @@
 			}
 			
 			$("input").val('');
-		
 		}
-		
+
 		$("#btn_Add").click(function(){
 		
 			var txtMemName = $('input:text[id="txtMemName"]').val();
 			flyMem[i++] = new Person(txtMemName);
 		
-			if($( "#selectParent option:selected" ).text())
+			if($( "#selectParent option:selected" ).val())
 			{		
 				flyMem[i-1].parent =  $("#selectParent").val();
 				
@@ -163,14 +163,19 @@
 		} 
 		module("Test for all the GUI elements");
 		test( "All required elements exist", 6, function() {
-			ok($("#selectParent").length != 0, "DropDown Box Exists");
-		    ok($("#txtMemNum").length != 0, "TextBox exists");
+			ok($("#selectParent").length != 0, "DropDown Box exists");
+		    ok($("#txtMemName").length != 0, "TextBox exists");
 		    ok($("#btn_Add").length != 0, "Add Button exists");
 			ok($("#btn_Rename").length != 0, "Rename Button exists");
 			ok($("#btn_Delete").length != 0, "Delete Button exists");
-			ok($("#btn_Get_GrandParent").length != 0, "Get Grand Parent exists");
-			
-		});         
+			ok($("#btn_Get_Grand_Node").length != 0, "Get Grand Parent exists");
+		});
+		module("Test Elements when user clicks on add button");
+		test("All required element exist", 2,function(){
+			ok($("input").length !=0," TextBox exists");
+			ok($("input").empty()," TextBox is empty");		
+		});
+		
 		</script>   
 		</div>      
 		<h1 id="qunit-header">QUnit Testing  Family Tree App</h1>
