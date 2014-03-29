@@ -37,7 +37,8 @@
 		}
 
 			// function to clear objects from <select> and re-load. Also clear TextBox
-		function ClearVal(){
+		function ClearVal()
+		{
 
 			$("select").empty();
 			$(".div_display").empty();
@@ -53,9 +54,10 @@
 			$("input").val('');
 		}
 
-		$("#btn_Add").click(function(){
+		// function to add node to tree
 		
-			var txtMemName = $('input:text[id="txtMemName"]').val();
+		function AddVal(txtMemName)
+		{
 			flyMem[i++] = new Person(txtMemName);
 		
 			if($( "#selectParent option:selected" ).val())
@@ -64,25 +66,9 @@
 				
 				flyMem[$( "#selectParent option:selected" ).val()].child +=1;
 			}
-			
-			ClearVal();
-		});
+		}
 		
-		$("#btn_Rename").click(function(){
-			
-			var txtMemName = $('input:text[id="txtMemName"]').val();
-			var id_flyMem = $("#selectParent").val();
-			flyMem[id_flyMem].name = txtMemName;
-			
-			
-			ClearVal();
-
-		});
-	  
-	  
-		$("#btn_Delete").click(function(){
-			
-			var id_flyMem = $("#selectParent").val();
+		function DelVal(id_flyMem){
 			var n_child = flyMem[id_flyMem].child; 
 			
 			if(n_child != null)
@@ -121,19 +107,34 @@
 			
 			}		
 			
-			for(var key in flyMem)
-			{
-				if( flyMem[key].parent == id_flyMem)
-				{
-					flyMem[key].name = null;
-					flyMem[key].parent = null;
-					flyMem[id_flyMem].child = false;
-				}
-				
-				
-			
-			}
+
 		
+		
+		}
+		
+		$("#btn_Add").click(function(){
+		
+			var txtMemName = $('input:text[id="txtMemName"]').val();
+			AddVal(txtMemName);
+			ClearVal();
+		});
+		
+		$("#btn_Rename").click(function(){
+			
+			var txtMemName = $('input:text[id="txtMemName"]').val();
+			var id_flyMem = $("#selectParent").val();
+			flyMem[id_flyMem].name = txtMemName;
+			
+			
+			ClearVal();
+
+		});
+	  
+	  
+		$("#btn_Delete").click(function(){
+			
+			var id_flyMem = $("#selectParent").val();
+			DeleteVal(id_flyMem);
 			ClearVal();
 			
 		});
@@ -172,8 +173,12 @@
 		});
 		module("Test Elements when user clicks on add button");
 		test("All required element exist", 2,function(){
+			
 			ok($("input").length !=0," TextBox exists");
 			ok($("input").empty()," TextBox is empty");		
+			
+			
+			
 		});
 		
 		</script>   
