@@ -12,7 +12,7 @@
 	<div class="top-div">
 	<div class="div_txt"> Welcome to Family Tree</div>
 	<select id="selectParent"> </select>
-	<input type="text"  id="txtMemName"></input>
+	<input  id="txtMemName" type="text"> </input>
 	<button id="btn_Add">Add Node</button> 
 	<button id="btn_Rename">Rename Node</button>
 	<button id="btn_Delete">Delete Node</button>
@@ -161,22 +161,19 @@
 				window.console.log(result +' :: '+ message);
 			}
 		} 
-		module("Basic Unit Test");
-		test("Sample test", function()
-			{
-				expect(2);
-				equal(divide(4,2),2,'Expected 2 as the result, result was: ' + divide(4,2));
-				equal(divide(6,2),4,'Expected 2 as the result, result was: ' + divide(4,2));
-		    });
-		function divide(a,b)
-		{
-			return a/b;
-		
-		}
-		</script>
-
-	</div>
-		<h1 id="qunit-header">QUnit example</h1>
+		module("Test for all the GUI elements");
+		test( "All required elements exist", 6, function() {
+			ok($("#selectParent").length != 0, "DropDown Box Exists");
+		    ok($("#txtMemNum").length != 0, "TextBox exists");
+		    ok($("#btn_Add").length != 0, "Add Button exists");
+			ok($("#btn_Rename").length != 0, "Rename Button exists");
+			ok($("#btn_Delete").length != 0, "Delete Button exists");
+			ok($("#btn_Get_GrandParent").length != 0, "Get Grand Parent exists");
+			
+		});         
+		</script>   
+		</div>      
+		<h1 id="qunit-header">QUnit Testing  Family Tree App</h1>
 		<h2 id="qunit-banner"></h2>
 		<h2 id="qunit-userAgent"></h2>
 		<ol id="qunit-tests">
