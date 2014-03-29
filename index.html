@@ -68,7 +68,7 @@
 			}
 		}
 		
-		function DelVal(id_flyMem){
+		function DeleteVal(id_flyMem){
 			var n_child = flyMem[id_flyMem].child; 
 			
 			if(n_child != null)
@@ -124,8 +124,6 @@
 			var txtMemName = $('input:text[id="txtMemName"]').val();
 			var id_flyMem = $("#selectParent").val();
 			flyMem[id_flyMem].name = txtMemName;
-			
-			
 			ClearVal();
 
 		});
