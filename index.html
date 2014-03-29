@@ -9,7 +9,14 @@
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>		
 	</head>
 	<body>
+	
 	<div class="top-div">
+	     
+		<h1 id="qunit-header">QUnit Testing  Family Tree App</h1>
+		<h2 id="qunit-banner"></h2>
+		<h2 id="qunit-userAgent"></h2>
+		<ol id="qunit-tests">
+		</ol>	
 	<div class="div_txt"> Welcome to Family Tree</div>
 	<select id="selectParent"> </select>
 	<input  id="txtMemName" type="text"> </input>
@@ -73,7 +80,7 @@
 
 		//Qunit Test -- Add
 		module("Test for add elements");
-		test("",13,function(){
+		test("",30,function(){
 		
 		AddVal("Alias"); 
 			equals(flyMem[0].name,"Alias"," Alias accepted");
@@ -85,32 +92,37 @@
 			equals(flyMem[2].name,"Real-life","Real-life accepted");
 			flyMem[2].parent = 0;
 			equals(flyMem[2].parent,0,"Real-life is Child of Alias");
+		AddVal("Captain",1);
+			equals(flyMem[3].name,"Captain","Captain accepted");
+			equals(flyMem[3].parent,1," Captain is Child of Fictional");
 		AddVal("Jack"); 		
-			equals(flyMem[3].name,"Jack","Jack accepted");
-			flyMem[3].parent = 1;
-			equals(flyMem[3].parent,1," Jack is Child of Fictional");
-		AddVal("Sparrow"); 		
-			equals(flyMem[4].name,"Sparrow"," Sparrow accepted");
+			equals(flyMem[4].name,"Jack","Jack accepted");
 			flyMem[4].parent = 1;
-			equals(flyMem[4].parent,1," Sparrow is Child of Fictional");
+			equals(flyMem[4].parent,1," Jack is Child of Fictional");
+		AddVal("Sparrow"); 		
+			equals(flyMem[5].name,"Sparrow"," Sparrow accepted");
+			flyMem[5].parent = 1;
+			equals(flyMem[5].parent,1," Sparrow is Child of Fictional");
 		AddVal("Johnny");
-			equals(flyMem[5].name,"Johnny"," Johnny accepted");
-			flyMem[5].parent = 2;
-			equals(flyMem[5].parent,2," Johnny is Child of real-life");
-		AddVal("Depp");
-			equals(flyMem[6].name,"Depp"," depp accepted");
+			equals(flyMem[6].name,"Johnny"," Johnny accepted");
 			flyMem[6].parent = 2;
-			equals(flyMem[6].parent,2," Depp is Child of real-life");
+			equals(flyMem[6].parent,2," Johnny is Child of real-life");
+		AddVal("Depp");
+			equals(flyMem[7].name,"Depp"," depp accepted");
+			flyMem[7].parent = 2;
+			equals(flyMem[7].parent,2," Depp is Child of real-life");
+			equals(flyMem[1].child,3," Fictional childs");
 
-		
-			
-			
+		DeleteVal(3);
+				equals(flyMem[3].name,"Jack","Captain deleted and now its" );			
+				equals(flyMem[3].prevNode,null,"Jack prevNode now points to null" );
+				equals(flyMem[1].name,"Fictional","Yes its " );
+				equals(flyMem[1].lastNode,5,"Yes its " );
+				equals(flyMem[1].firstChild,4,"Yes its " );
+				equals(flyMem[1].child,2,"Yes its " );
 		});		
-
-
 		// function to add node to tree
-				
-		function AddVal(txtMemName)
+		function AddVal(txtMemName,parentVal)
 		{
 
 			if(!txtMemName)
@@ -123,11 +135,11 @@
 			
 			flyMem[i++] = new Person(txtMemName);
 			
-			if($( "#selectParent option:selected" ).val())
+			if($( "#selectParent option:selected" ).val() || parentVal)
 			{
 
-				var val_parent =$( "#selectParent option:selected" ).val();	
-				flyMem[i-1].parent =  $("#selectParent").val();
+				var val_parent = ($( "#selectParent option:selected" ).val()) ? $( "#selectParent option:selected" ).val()  : parentVal ;	
+				flyMem[i-1].parent =  val_parent ;
 				
 				flyMem[i-1].key = i-1;
 				flyMem[val_parent].child +=1;
@@ -143,40 +155,25 @@
 		}
 		
 		function DeleteVal(id_flyMem){
-			
-			if(!flyMem[id_flyMem]){
+		if(!flyMem[id_flyMem]){
 				
 				$(".div_warn").append("Delete opereation Cannot work with empty dropDown");
 				console.warn("Delete opeartion Cannot work with empty dropDown");
 				return;
 			}
-			
 			var n_child = flyMem[id_flyMem].child; 
-			
-			
 			if(n_child != 0)
 			{	
-					
-					DeleteLastNode(id_flyMem);
-					
-			
+				DeleteLastNode(id_flyMem);			
 			}		
-			
-				$(".div_warn").append("<p>" + flyMem[id_flyMem].name  +" has been deleted</p>");
-				// decrement child count in parent by 1
-				if(flyMem[id_flyMem].parent) flyMem[flyMem[id_flyMem].parent].child -=1;
-				
-				if(flyMem[id_flyMem].nextNode) flyMem[flyMem[id_flyMem].prevNode].nextNode = flyMem[id_flyMem].nextNode;
-				
-				
-				if(flyMem[id_flyMem].prevNode )  flyMem[flyMem[id_flyMem].nextNode].prevNode = flyMem[id_flyMem].prevNode;
- 				flyMem[flyMem[id_flyMem].parent].lastNode = flyMem[id_flyMem].prevNode;
-				// empty array element
-				flyMem.splice(id_flyMem,1);
-			
-
-		
-		
+			$(".div_warn").append("<p>" + flyMem[id_flyMem].name  +" has been deleted</p>");
+			// decrement child count in parent by 1
+			if(flyMem[id_flyMem].parent) flyMem[flyMem[id_flyMem].parent].child -=1;
+			if(flyMem[id_flyMem].nextNode) flyMem[flyMem[id_flyMem].prevNode].nextNode = flyMem[id_flyMem].nextNode;
+			if(flyMem[id_flyMem].prevNode )  flyMem[flyMem[id_flyMem].nextNode].prevNode = flyMem[id_flyMem].prevNode;
+ 			flyMem[flyMem[id_flyMem].parent].lastNode = flyMem[id_flyMem].prevNode;
+			// empty array element
+			flyMem.splice(id_flyMem,1);
 		}
 		
 		function DeleteLastNode(id)
@@ -295,12 +292,7 @@
 		});
 
 		</script>   
-		</div>      
-		<h1 id="qunit-header">QUnit Testing  Family Tree App</h1>
-		<h2 id="qunit-banner"></h2>
-		<h2 id="qunit-userAgent"></h2>
-		<ol id="qunit-tests">
-		</ol>
+		</div> 
 	</body>
 
 </html>
