@@ -16,6 +16,7 @@
 	<button id="btn_Add">Add Node</button> 
 	<button id="btn_Rename">Rename Node</button>
 	<button id="btn_Delete">Delete Node</button>
+	<button id="btn_Position">Position Node</button>
 	<button id="btn_Get_Grand_Node">Get Grand-Parent Node</button>
 	<div class="div_display">
 	</div>
@@ -45,12 +46,14 @@
 
 			$("select").empty();
 			$(".div_display").empty();
+			$(".div_display").append("<p>Number of elements in the list " + flyMem.length +"</p>");	
 			
 			for(var key in flyMem){
+				
 				if(flyMem[key].name != null)
 				{
 					$("select").append("<option value='"+key+"'>"+ flyMem[key].name +"</option>");
-					$(".div_display").append("<p>" + flyMem[key].name + " " + flyMem[key].parent +"</p>");	
+					$(".div_display").append("<p>" + flyMem[key].name + " " + flyMem[key].parent + " " + flyMem[key].child +"</p>");	
 				}
 			}
 			
@@ -130,7 +133,8 @@
 			}		
 			
 			else {
-				$(".div_warn").append("<p>" + flyMem[id_flyMem] +"</p>");			
+				$(".div_warn").append("<p>" + flyMem[id_flyMem].name  +" has been deleted</p>");
+				if(flyMem[id_flyMem].parent) flyMem[flyMem[id_flyMem].parent].child -=1
 				flyMem.splice(id_flyMem,1);
 			}
 
@@ -152,6 +156,21 @@
 
 		}
 		
+		
+		$("#btn_Position").click(function(){
+			$(".div_warn").empty();
+			var id_flyMem = $("#selectParent").val();
+			if(id_flyMem)
+			{
+				$(".div_warn").append("<p>Position of " + flyMem[id_flyMem].name + " : " + id_flyMem + "</p>");
+				return;
+			}
+			
+			$(".div_warn").append("Position button Cannot work with empty TextBox or empty dropDown");
+			console.warn("Position button Cannot work with empty TextBox or empty dropDown");
+			
+			
+		});
 		$("#btn_Add").click(function(){
 			
 			$(".div_warn").empty();
@@ -229,7 +248,7 @@
 			
 			
 		});
-		
+
 		</script>   
 		</div>      
 		<h1 id="qunit-header">QUnit Testing  Family Tree App</h1>
