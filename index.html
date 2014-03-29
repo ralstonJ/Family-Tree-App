@@ -1,166 +1,168 @@
 <html>
-<head>
-<title>Family Tree App by Ralston ALmeida </title>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
-</script>
-<link rel="icon" type="image/png" href="./icon.png">
-<link type="text/css" rel="stylesheet" href="Home.css" />
+	<head>
+		<title>Family Tree App by Ralston ALmeida </title>
+		<link rel="icon" type="image/png" href="./icon.png">
+		<link type="text/css" rel="stylesheet" href="Home.css" />
+		<link rel="stylesheet" href="core/qunit.css" type="text/css" media="screen" />
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script type="text/javascript" src="core/qunit.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>		
+	</head>
+	<body>
+	<div class="top-div">
+	<div class="div_txt"> Welcome to Family Tree</div>
+	<select id="selectParent"> </select>
+	<input type="text"  id="txtMemName"></input>
+	<button id="btn_Add">Add Node</button> 
+	<button id="btn_Rename">Rename Node</button>
+	<button id="btn_Delete">Delete Node</button>
+	<button id="btn_Get_Grand_Node">Get Grand-Parent Node</button>
+	<div class="div_display">
+	</div>
+	<script>
+	$(document).ready(function(){
+		
+		var i = 0
+		var flyMem = new Array();
+		
+		function Person(name) 
+		{
+			// Lets node knwo if it has a parent
+			this.parent = null;
+			// The data that is required to show
+			this.name = name;
+			// A count, to keep track of the number of children
+			this.child = 0;
 
-</head>
-
-<body>
-<div class="top-div">
-<div class="div_txt"> Welcome to Family Tree</div>
-
-<select id="selectParent"> </select>
-<input type="text"  id="txtMemName"></input>
-<button id="btn_Add">Add Node</button> 
-<button id="btn_Rename">Rename Node</button>
-<button id="btn_Delete">Delete Node</button>
-<button id="btn_Get_Grand_Node">Get Grand-Parent Node</button>
-
-<div class="div_display">
-</div>
-<script>
-$(document).ready(function(){
-	
-	var i = 0
-	var flyMem = new Array();
-	
-	function Person(name) 
-	{
-		// Lets node knwo if it has a parent
-		this.parent = null;
-		// The data that is required to show
-		this.name = name;
-		// A count, to keep track of the number of children
-		this.child = 0;
-
-	}
-
-		// function to clear objects from <select> and re-load. Also clear TextBox
-	function ClearVal(){
-	
-			$("select").empty();
-		$(".div_display").empty();
-		for(var key in flyMem){
-			if(flyMem[key].name != null)
-			{
-				$("select").append("<option value='"+key+"'>"+ flyMem[key].name +"</option>");
-				$(".div_display").append("<p>" + flyMem[key].name + " " + flyMem[key].parent +"</p>");	
-			}
 		}
-		
-		$("input").val('');
-	
-	}
-	
-	$("#btn_Add").click(function(){
-	
-		var txtMemName = $('input:text[id="txtMemName"]').val();
-		flyMem[i++] = new Person(txtMemName);
-	
-		if($( "#selectParent option:selected" ).text())
-		{		
-			flyMem[i-1].parent =  $("#selectParent").val();
-			
-			flyMem[$( "#selectParent option:selected" ).val()].child +=1;
-		}
-		
-		ClearVal();
-	});
-	
-	$("#btn_Rename").click(function(){
-		
-		var txtMemName = $('input:text[id="txtMemName"]').val();
-		var id_flyMem = $("#selectParent").val();
-		flyMem[id_flyMem].name = txtMemName;
-		
-		
-		ClearVal();
 
-	});
-  
-  
-	$("#btn_Delete").click(function(){
+			// function to clear objects from <select> and re-load. Also clear TextBox
+		function ClearVal(){
 		
-		var id_flyMem = $("#selectParent").val();
-		var n_child = flyMem[id_flyMem].child; 
-		
-		if(n_child != null)
-		{	var cnt= 0;
-			for( var i = (id_flyMem +1 ); i<flyMem.length;i++)
-			{
-				if( flyMem[i].parent == id_flyMem) 
+				$("select").empty();
+			$(".div_display").empty();
+			for(var key in flyMem){
+				if(flyMem[key].name != null)
 				{
-					cnt++;
-					// Quick Delete if remaining elements are only child(ren) of the node that is being deleted.
-					if((flyMem.length - cnt == n_child)  && flyMem[i].parent == flyMem[i+1].parent)
-					{	
-						//Delete all till end, No need to adjust space with array
-						flyMem.splice(i,n_child);
-						for(var j = i; j < flyMem.length - 1 ;j++){
-							flyMem[j].child = flyMem[j+1].child;  
-							flyMem[j].parent = flyMem[j+1].parent;  
-							flyMem[j].name = flyMem[j +1].name;
-							i++;
-						}
-						flyMem.splice(i,1);
-					}
-					
-				}				
-				
-				if(cnt == flyMem[id_flyMem].child)
-				{	
-					
-					flyMem[flyMem[id_flyMem].parent].child -= 1;
-					break;
+					$("select").append("<option value='"+key+"'>"+ flyMem[key].name +"</option>");
+					$(".div_display").append("<p>" + flyMem[key].name + " " + flyMem[key].parent +"</p>");	
 				}
-			
 			}
 			
+			$("input").val('');
+		
+		}
+		
+		$("#btn_Add").click(function(){
+		
+			var txtMemName = $('input:text[id="txtMemName"]').val();
+			flyMem[i++] = new Person(txtMemName);
+		
+			if($( "#selectParent option:selected" ).text())
+			{		
+				flyMem[i-1].parent =  $("#selectParent").val();
+				
+				flyMem[$( "#selectParent option:selected" ).val()].child +=1;
+			}
 			
+			ClearVal();
+		});
 		
-		}		
-		
-		for(var key in flyMem)
-		{
-			if( flyMem[key].parent == id_flyMem)
+		$("#btn_Rename").click(function(){
+			
+			var txtMemName = $('input:text[id="txtMemName"]').val();
+			var id_flyMem = $("#selectParent").val();
+			flyMem[id_flyMem].name = txtMemName;
+			
+			
+			ClearVal();
+
+		});
+	  
+	  
+		$("#btn_Delete").click(function(){
+			
+			var id_flyMem = $("#selectParent").val();
+			var n_child = flyMem[id_flyMem].child; 
+			
+			if(n_child != null)
+			{	var cnt= 0;
+				for( var i = (id_flyMem +1 ); i<flyMem.length;i++)
+				{
+					if( flyMem[i].parent == id_flyMem) 
+					{
+						cnt++;
+						// Quick Delete if remaining elements are only child(ren) of the node that is being deleted.
+						if((flyMem.length - cnt == n_child)  && flyMem[i].parent == flyMem[i+1].parent)
+						{	
+							//Delete all till end, No need to adjust space with array
+							flyMem.splice(i,n_child);
+							for(var j = i; j < flyMem.length - 1 ;j++){
+								flyMem[j].child = flyMem[j+1].child;  
+								flyMem[j].parent = flyMem[j+1].parent;  
+								flyMem[j].name = flyMem[j +1].name;
+								i++;
+							}
+							flyMem.splice(i,1);
+						}
+						
+					}				
+					
+					if(cnt == flyMem[id_flyMem].child)
+					{	
+						
+						flyMem[flyMem[id_flyMem].parent].child -= 1;
+						break;
+					}
+				
+				}
+				
+				
+			
+			}		
+			
+			for(var key in flyMem)
 			{
-				flyMem[key].name = null;
-				flyMem[key].parent = null;
-				flyMem[id_flyMem].child = false;
+				if( flyMem[key].parent == id_flyMem)
+				{
+					flyMem[key].name = null;
+					flyMem[key].parent = null;
+					flyMem[id_flyMem].child = false;
+				}
+				
+				
+			
 			}
+		
+			ClearVal();
 			
+		});
+		
+		$("#btn_Get_Grand_Node").click(function(){
 			
-		
-		}
-	
-		ClearVal();
-		
-	});
-	
-	$("#btn_Get_Grand_Node").click(function(){
-		
-		var id_flyMem = $("#selectParent").val();
+			var id_flyMem = $("#selectParent").val();
 
-		if(flyMem[id_flyMem].parent !=null &&flyMem[flyMem[id_flyMem].parent].parent !=null )
-		{
-			alert("Grand parent exist!");
-		}
-		else
-			alert("Grand parent does not exist!");
-		ClearVal();
-	
-		$(".div_display").append("<p>Grand Parent of " +flyMem[id_flyMem].name + " is " + flyMem[flyMem[flyMem[id_flyMem].parent].parent].name + " </p>");
+			if(flyMem[id_flyMem].parent !=null &&flyMem[flyMem[id_flyMem].parent].parent !=null )
+			{
+				alert("Grand parent exist!");
+			}
+			else
+				alert("Grand parent does not exist!");
+			ClearVal();
 		
-	});	
-  });
-	
-	</script>
+			$(".div_display").append("<p>Grand Parent of " +flyMem[id_flyMem].name + " is " + flyMem[flyMem[flyMem[id_flyMem].parent].parent].name + " </p>");
+			
+		});	
+	  });
+		
+		</script>
 
-</div>
-
-</body>
+	</div>
+		<h1 id="qunit-header">QUnit example</h1>
+		<h2 id="qunit-banner"></h2>
+		<h2 id="qunit-userAgent"></h2>
+		<ol id="qunit-tests">
+		</ol>
+	</body>
 
 </html>
