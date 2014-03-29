@@ -39,8 +39,10 @@
 			// The data that is required to show
 			this.name = name;
 			
-			this.firstchild = null;
+			this.firstChild = null;
+			
 			this.neighbour = null;
+			
 			// A count, to keep track of the number of children
 			this.child = 0;
 
@@ -84,11 +86,16 @@
 			if($( "#selectParent option:selected" ).val())
 			{
 
-					
+				var val_parent =$( "#selectParent option:selected" ).val();	
 				flyMem[i-1].parent =  $("#selectParent").val();
-	
+				
 				flyMem[i-1].key = i-1;
-				flyMem[$( "#selectParent option:selected" ).val()].child +=1;
+				flyMem[val_parent].child +=1;
+				
+				// Add key value as firstchild or neighbour
+				if(!flyMem[val_parent].firstChild) flyMem[val_parent].firstChild = i-1;
+				else flyMem[flyMem[val_parent].firstChild].neighbour = i-1;
+				
 			}
 			
 		}
