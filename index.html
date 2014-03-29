@@ -29,8 +29,11 @@ $(document).ready(function(){
 	
 	function Person(name) 
 	{
+		// Lets node knwo if it has a parent
 		this.parent = null;
+		// The data that is required to show
 		this.name = name;
+		// A count, to keep track of the number of children
 		this.child = 0;
 
 	}
@@ -96,10 +99,13 @@ $(document).ready(function(){
 					{	
 						//Delete all till end, No need to adjust space with array
 						flyMem.splice(i,n_child);
-						
-						flyMem[id_flyMem].child = flyMem[id_flyMem +1].child;  
-						flyMem[id_flyMem].parent = flyMem[id_flyMem +1].parent;  
-						flyMem[id_flyMem].name = flyMem[id_flyMem +1].name;  
+						for(var j = i; j < flyMem.length - 1 ;j++){
+							flyMem[j].child = flyMem[j+1].child;  
+							flyMem[j].parent = flyMem[j+1].parent;  
+							flyMem[j].name = flyMem[j +1].name;
+							i++;
+						}
+						flyMem.splice(i,1);
 					}
 					
 				}				
