@@ -140,7 +140,8 @@
 		}
 		
 		$("#btn_Add").click(function(){
-		
+			
+			$(".div_warn").empty();
 			var txtMemName = $('input:text[id="txtMemName"]').val();
 			AddVal(txtMemName);
 			ClearVal();
@@ -148,7 +149,7 @@
 		
 		$("#btn_Rename").click(function(){
 			
-			
+			$(".div_warn").empty();
 			var txtMemName = $('input:text[id="txtMemName"]').val();
 			RenameVal(txtMemName);
 			ClearVal();
@@ -157,7 +158,7 @@
 	  
 	  
 		$("#btn_Delete").click(function(){
-			$(div_warn).empty();
+			$(".div_warn").empty();
 			var id_flyMem = $("#selectParent").val();
 			DeleteVal(id_flyMem);
 			ClearVal();
