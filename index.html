@@ -41,7 +41,9 @@
 			
 			this.firstChild = null;
 			
-			this.neighbour = null;
+			this.nextNode = null;
+			
+			this.prevNode = null;
 			
 			this.lastNode = null;
 			// A count, to keep track of the number of children
@@ -62,7 +64,7 @@
 				if(flyMem[key].name != null)
 				{
 					$("select").append("<option value='"+flyMem[key].key+"'>"+ flyMem[key].name +"</option>");
-					$(".div_display").append("<p> Name:	" + flyMem[key].name + "	Parent:	" + flyMem[key].parent + "	NChild:	" + flyMem[key].child + "	FirstChild:	" + flyMem[key].firstChild + "	Neighbour:	" + flyMem[key].neighbour + "	LastNode:	" + flyMem[key].lastNode + "</p>");	
+					$(".div_display").append("<p> Name:	" + flyMem[key].name + "	Parent:	" + flyMem[key].parent + "	NChild:	" + flyMem[key].child + "	FirstChild:	" + flyMem[key].firstChild + "	nextNode:	" + flyMem[key].nextNode + "	LastNode:	" + flyMem[key].lastNode + "	PrevNode:	" + flyMem[key].prevNode +"</p>");	
 				}
 			}
 			
@@ -93,10 +95,11 @@
 				flyMem[i-1].key = i-1;
 				flyMem[val_parent].child +=1;
 				
-				// Add key value as firstchild or neighbour and update lastNode
+				// Add key value as firstchild or nextNode and update lastNode
 				if(!flyMem[val_parent].firstChild) flyMem[val_parent].firstChild = i-1;
-				else flyMem[flyMem[val_parent].lastNode].neighbour = i-1;
-				
+				else flyMem[flyMem[val_parent].lastNode].nextNode = i-1;
+			
+				flyMem[i-1].prevNode = flyMem[val_parent].lastNode;
 				flyMem[val_parent].lastNode = i-1;		
 			}
 			
@@ -117,41 +120,30 @@
 			if(n_child != 0)
 			{	
 					
-					DeleteFirstChild(flyMem[id_flyMem].firstChild);
-					DeleteNeighbours(flyMem[id_flyMem].firstChild );
-					//Delete
-					$(".div_warn").append("<p>" + flyMem[id_flyMem].name  +" has been deleted</p>");
-					// decrement child count in parent by 1
-					if(flyMem[id_flyMem].parent) flyMem[flyMem[id_flyMem].parent].child -=1;
-								
-					// empty array element
-					flyMem.splice(id_flyMem,1);
+					DeleteLastNode(id_flyMem);
 					
 			
 			}		
 			
-			else {
 				$(".div_warn").append("<p>" + flyMem[id_flyMem].name  +" has been deleted</p>");
 				// decrement child count in parent by 1
 				if(flyMem[id_flyMem].parent) flyMem[flyMem[id_flyMem].parent].child -=1;
 				
-				
+				flyMem[flyMem[id_flyMem].parent].lastNode = flyMem[id_flyMem].prevNode;
 				// empty array element
 				flyMem.splice(id_flyMem,1);
-			}
+			
 
 		
 		
 		}
 		
-		function DeleteFirstChild(id)
-		{
-			DeleteVal(id);		
-		}
-		
-		function DeleteNeighbours(id)
+		function DeleteLastNode(id)
 		{
 		
+			DeleteVal(flyMem[id].lastNode );
+			
+			
 		}
 		
 		function RenameVal(txtMemName)
