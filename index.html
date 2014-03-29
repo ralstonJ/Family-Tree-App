@@ -31,7 +31,8 @@ $(document).ready(function(){
 	{
 		this.parent = null;
 		this.name = name;
-		this.child = false;
+		this.child = 0;
+
 	}
 
 		// function to clear objects from <select> and re-load. Also clear TextBox
@@ -51,12 +52,6 @@ $(document).ready(function(){
 	
 	}
 	
-	var options = $("option");
-	$.each(flyMem, function() {
-    options.append($("<option />").val(this.ImageFolderID).text(this.Name));
-	});
-
-	
 	$("#btn_Add").click(function(){
 	
 		var txtMemName = $('input:text[id="txtMemName"]').val();
@@ -65,7 +60,8 @@ $(document).ready(function(){
 		if($( "#selectParent option:selected" ).text())
 		{		
 			flyMem[i-1].parent =  $("#selectParent").val();
-			flyMem[$( "#selectParent option:selected" ).val()].child = true; 
+			
+			flyMem[$( "#selectParent option:selected" ).val()].child +=1;
 		}
 		
 		ClearVal();
@@ -86,9 +82,37 @@ $(document).ready(function(){
 	$("#btn_Delete").click(function(){
 		
 		var id_flyMem = $("#selectParent").val();
-		flyMem[id_flyMem].parent = null;
-		flyMem[id_flyMem].name = null;
-		flyMem[id_flyMem].child = false;
+		var n_child = flyMem[id_flyMem].child; 
+		
+		if(n_child != null)
+		{	var cnt= 0;
+			for( var i = (id_flyMem +1 ); i<flyMem.length;i++)
+			{
+				if( flyMem[i].parent == id_flyMem) 
+				{
+					cnt++;
+					// Quick Delete if remaining elements are only child(ren) of the node that is being deleted.
+					if((flyMem.length - cnt == n_child)  && flyMem[i].parent == flyMem[i+1].parent)
+					{	
+						//Delete all till end, No need to adjust space with array
+						
+					}
+					
+				}				
+				
+				if(cnt == flyMem[id_flyMem].child)
+				{	
+					
+					flyMem[flyMem[id_flyMem].parent].child -= 1;
+					break;
+				}
+			
+			}
+			
+			
+		
+		}		
+		
 		for(var key in flyMem)
 		{
 			if( flyMem[key].parent == id_flyMem)
