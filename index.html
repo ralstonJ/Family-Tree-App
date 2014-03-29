@@ -19,6 +19,9 @@
 	<button id="btn_Get_Grand_Node">Get Grand-Parent Node</button>
 	<div class="div_display">
 	</div>
+	<div class="div_warn">
+	</div>
+
 	<script>
 	$(document).ready(function(){
 		
@@ -58,13 +61,23 @@
 		
 		function AddVal(txtMemName)
 		{
+
+			if(!txtMemName)
+			{
+
+				$(".div_warn").append("<p> Valid Name must be entered in TextBox </p>");	
+				console.warn("Valid Name must be entered in TextBox");
+			}
+			else
+			{
 			flyMem[i++] = new Person(txtMemName);
-		
+			
 			if($( "#selectParent option:selected" ).val())
 			{		
 				flyMem[i-1].parent =  $("#selectParent").val();
 				
 				flyMem[$( "#selectParent option:selected" ).val()].child +=1;
+			}
 			}
 		}
 		
@@ -112,6 +125,20 @@
 		
 		}
 		
+		function RenameVal(txtMemName)
+		{
+			var id_flyMem = $("#selectParent").val();
+			if(id_flyMem && txtMemName)
+			{
+				flyMem[id_flyMem].name = txtMemName;
+				return;
+			}
+			
+			$(.div_warn).append("Cannot work with empty TextBox or empty dropDown");
+			console.warn("Cannot work with empty TextBox or empty dropDown");
+
+		}
+		
 		$("#btn_Add").click(function(){
 		
 			var txtMemName = $('input:text[id="txtMemName"]').val();
@@ -121,16 +148,16 @@
 		
 		$("#btn_Rename").click(function(){
 			
+			
 			var txtMemName = $('input:text[id="txtMemName"]').val();
-			var id_flyMem = $("#selectParent").val();
-			flyMem[id_flyMem].name = txtMemName;
+			RenameVal(txtMemName);
 			ClearVal();
 
 		});
 	  
 	  
 		$("#btn_Delete").click(function(){
-			
+			$(div_warn).empty();
 			var id_flyMem = $("#selectParent").val();
 			DeleteVal(id_flyMem);
 			ClearVal();
