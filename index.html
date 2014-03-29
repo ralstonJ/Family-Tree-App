@@ -128,8 +128,9 @@
 				$(".div_warn").append("<p>" + flyMem[id_flyMem].name  +" has been deleted</p>");
 				// decrement child count in parent by 1
 				if(flyMem[id_flyMem].parent) flyMem[flyMem[id_flyMem].parent].child -=1;
-				
-				flyMem[flyMem[id_flyMem].parent].lastNode = flyMem[id_flyMem].prevNode;
+				if(flyMem[id_flyMem].nextNode) flyMem(flyMem[id_flyMem].prevNode).nextNode = flyMem[id_flyMem].nextNode;
+				if(flyMem[id_flyMem].prevNode )  flyMem(flyMem[id_flyMem].nextNode).prevNode = flyMem[id_flyMem].prevNode;
+ 				flyMem[flyMem[id_flyMem].parent].lastNode = flyMem[id_flyMem].prevNode;
 				// empty array element
 				flyMem.splice(id_flyMem,1);
 			
