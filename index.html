@@ -33,8 +33,14 @@
 		{
 			// Lets node knwo if it has a parent
 			this.parent = null;
+			// key
+			this.key = 0;
+			
 			// The data that is required to show
 			this.name = name;
+			
+			this.firstchild = null;
+			this.neighbour = null;
 			// A count, to keep track of the number of children
 			this.child = 0;
 
@@ -52,7 +58,7 @@
 				
 				if(flyMem[key].name != null)
 				{
-					$("select").append("<option value='"+key+"'>"+ flyMem[key].name +"</option>");
+					$("select").append("<option value='"+flyMem[key].key+"'>"+ flyMem[key].name +"</option>");
 					$(".div_display").append("<p>" + flyMem[key].name + " " + flyMem[key].parent + " " + flyMem[key].child +"</p>");	
 				}
 			}
@@ -70,18 +76,21 @@
 
 				$(".div_warn").append("<p>Valid Name must be entered in TextBox</p>");	
 				console.warn("Valid Name must be entered in TextBox");
+				return;
 			}
-			else
-			{
+			
 			flyMem[i++] = new Person(txtMemName);
 			
 			if($( "#selectParent option:selected" ).val())
-			{		
+			{
+
+					
 				flyMem[i-1].parent =  $("#selectParent").val();
-				
+	
+				flyMem[i-1].key = i-1;
 				flyMem[$( "#selectParent option:selected" ).val()].child +=1;
 			}
-			}
+			
 		}
 		
 		function DeleteVal(id_flyMem){
@@ -97,44 +106,28 @@
 			
 			
 			if(n_child != 0)
-			{	var cnt= 0;
-				for( var i = (id_flyMem +1 ); i<flyMem.length;i++)
-				{
-					if( flyMem[i].parent == id_flyMem) 
-					{
-						cnt++;
-						// Quick Delete if remaining elements are only child(ren) of the node that is being deleted.
-						if((flyMem.length - cnt == n_child)  && flyMem[i].parent == flyMem[i+1].parent)
-						{	
-							//Delete all till end, No need to adjust space with array
-							flyMem.splice(i,n_child);
-							for(var j = i; j < flyMem.length - 1 ;j++){
-								flyMem[j].child = flyMem[j+1].child;  
-								flyMem[j].parent = flyMem[j+1].parent;  
-								flyMem[j].name = flyMem[j +1].name;
-								i++;
-							}
-							flyMem.splice(i,1);
-						}
-						
-					}				
+			{	
 					
-					if(cnt == flyMem[id_flyMem].child)
-					{	
-						
-						flyMem[flyMem[id_flyMem].parent].child -= 1;
-						break;
-					}
-				
-				}
-				
-				
+					//DeleteFirstChild( );
+					//DeleteNeighbours( )
+					//Delete
+					$(".div_warn").append("<p>" + flyMem[id_flyMem].name  +" has been deleted</p>");
+					// decrement child count in parent by 1
+					if(flyMem[id_flyMem].parent) flyMem[flyMem[id_flyMem].parent].child -=1;
+								
+					// empty array element
+					flyMem.splice(id_flyMem,1);
+					
 			
 			}		
 			
 			else {
 				$(".div_warn").append("<p>" + flyMem[id_flyMem].name  +" has been deleted</p>");
-				if(flyMem[id_flyMem].parent) flyMem[flyMem[id_flyMem].parent].child -=1
+				// decrement child count in parent by 1
+				if(flyMem[id_flyMem].parent) flyMem[flyMem[id_flyMem].parent].child -=1;
+				
+				
+				// empty array element
 				flyMem.splice(id_flyMem,1);
 			}
 
