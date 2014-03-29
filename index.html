@@ -85,14 +85,15 @@
 			
 			if(!flyMem[id_flyMem]){
 				
-				$(".div_warn").append("Delete opereation Cannot work with empty TextBox or empty dropDown");
-				console.warn("Delete opeartion Cannot work with empty TextBox or empty dropDown");
+				$(".div_warn").append("Delete opereation Cannot work with empty dropDown");
+				console.warn("Delete opeartion Cannot work with empty dropDown");
 				return;
 			}
 			
 			var n_child = flyMem[id_flyMem].child; 
 			
-			if(n_child != null)
+			
+			if(n_child != 0)
 			{	var cnt= 0;
 				for( var i = (id_flyMem +1 ); i<flyMem.length;i++)
 				{
@@ -128,6 +129,10 @@
 			
 			}		
 			
+			else {
+				$(".div_warn").append("<p>" + flyMem[id_flyMem] +"</p>");			
+				flyMem.splice(id_flyMem,1);
+			}
 
 		
 		
@@ -182,19 +187,21 @@
 				$(".div_warn").append("Get Grand Parent Node Cannot work with empty TextBox or empty dropDown");
 				console.warn("Get Grand Parent Node Cannot work with empty TextBox or empty dropDown");
 				return;
-
 			}
+			
+			ClearVal();
 				
 			if(flyMem[id_flyMem].parent !=null &&flyMem[flyMem[id_flyMem].parent].parent !=null )
 			{		
 				alert("Grand parent exist!");
+				
+				$(".div_display").append("<p>Grand Parent of " +flyMem[id_flyMem].name + " is " + flyMem[flyMem[flyMem[id_flyMem].parent].parent].name + " </p>");
+			
 			}
 			else
 				alert("Grand parent does not exist!");
-			ClearVal();
-		
-			$(".div_display").append("<p>Grand Parent of " +flyMem[id_flyMem].name + " is " + flyMem[flyMem[flyMem[id_flyMem].parent].parent].name + " </p>");
 			
+		
 		});	
 	  });
 		QUnit.log = function(result, message)
