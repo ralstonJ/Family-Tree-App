@@ -65,7 +65,7 @@
 			if(!txtMemName)
 			{
 
-				$(".div_warn").append("<p> Valid Name must be entered in TextBox </p>");	
+				$(".div_warn").append("<p>Valid Name must be entered in TextBox</p>");	
 				console.warn("Valid Name must be entered in TextBox");
 			}
 			else
@@ -82,6 +82,14 @@
 		}
 		
 		function DeleteVal(id_flyMem){
+			
+			if(!flyMem[id_flyMem]){
+				
+				$(".div_warn").append("Delete opereation Cannot work with empty TextBox or empty dropDown");
+				console.warn("Delete opeartion Cannot work with empty TextBox or empty dropDown");
+				return;
+			}
+			
 			var n_child = flyMem[id_flyMem].child; 
 			
 			if(n_child != null)
@@ -167,10 +175,18 @@
 		
 		$("#btn_Get_Grand_Node").click(function(){
 			
+			$(".div_warn").empty();
 			var id_flyMem = $("#selectParent").val();
-
-			if(flyMem[id_flyMem].parent !=null &&flyMem[flyMem[id_flyMem].parent].parent !=null )
+			if(!flyMem[id_flyMem])
 			{
+				$(".div_warn").append("Get Grand Parent Node Cannot work with empty TextBox or empty dropDown");
+				console.warn("Get Grand Parent Node Cannot work with empty TextBox or empty dropDown");
+				return;
+
+			}
+				
+			if(flyMem[id_flyMem].parent !=null &&flyMem[flyMem[id_flyMem].parent].parent !=null )
+			{		
 				alert("Grand parent exist!");
 			}
 			else
