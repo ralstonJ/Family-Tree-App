@@ -3,9 +3,9 @@
 		<title>Family Tree App by Ralston ALmeida </title>
 		<link rel="icon" type="image/png" href="./icon.png">
 		<link type="text/css" rel="stylesheet" href="Home.css" />
-		<link rel="stylesheet" href="core/qunit.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="resources/qunit.css" type="text/css" media="screen" />
 		<script src="http://code.jquery.com/jquery-latest.js"></script>
-		<script type="text/javascript" src="core/qunit.js"></script>
+		<script type="text/javascript" src="resources/qunit.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>		
 	</head>
 	<body>
@@ -154,7 +154,25 @@
 			
 		});	
 	  });
+		QUnit.log = function(result, message)
+		{
+			if (window.console && window.console.log)
+			{
+				window.console.log(result +' :: '+ message);
+			}
+		} 
+		module("Basic Unit Test");
+		test("Sample test", function()
+			{
+				expect(2);
+				equal(divide(4,2),2,'Expected 2 as the result, result was: ' + divide(4,2));
+				equal(divide(6,2),4,'Expected 2 as the result, result was: ' + divide(4,2));
+		    });
+		function divide(a,b)
+		{
+			return a/b;
 		
+		}
 		</script>
 
 	</div>
