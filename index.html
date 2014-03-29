@@ -71,8 +71,21 @@
 			$("input").val('');
 		}
 
-		// function to add node to tree
+		//Qunit Test -- Add
+		module("Test for add elements");
+		test("",3,function(){
 		
+		AddVal("Jack"); 
+			equals(flyMem[0].name,"Jack"," JAck accepted");
+		AddVal("Sparrow"); 			
+			equals(flyMem[1].name,"Sparrow"," Sparrow accepted");
+			flyMem[1].parent = 0;
+			equals(flyMem[1].parent,0," Sparrow accepted");
+		});		
+
+
+		// function to add node to tree
+				
 		function AddVal(txtMemName)
 		{
 
@@ -256,13 +269,7 @@
 			
 			
 		});
-		module("Test for add elements");
-		test("",2,function(){
-		
-		AddVal("Jack"); 
-			equals(flyMem[0].name,"Dean"," Dean accepted");
-		AddVal("Sparrow"); 			
-		});
+
 		</script>   
 		</div>      
 		<h1 id="qunit-header">QUnit Testing  Family Tree App</h1>
