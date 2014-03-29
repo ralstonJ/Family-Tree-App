@@ -83,35 +83,13 @@
 		test("",30,function(){
 		
 		AddVal("Alias"); 
-			equals(flyMem[0].name,"Alias"," Alias accepted");
-		AddVal("Fictional"); 		
-			equals(flyMem[1].name,"Fictional","Fictional accepted");
-			flyMem[1].parent = 0;
-			equals(flyMem[1].parent,0,"Fictional is Child of Alias");
-		AddVal("Real-life");
-			equals(flyMem[2].name,"Real-life","Real-life accepted");
-			flyMem[2].parent = 0;
-			equals(flyMem[2].parent,0,"Real-life is Child of Alias");
+		AddVal("Fictional",0); 		
+		AddVal("Real-life",0);
 		AddVal("Captain",1);
-			equals(flyMem[3].name,"Captain","Captain accepted");
-			equals(flyMem[3].parent,1," Captain is Child of Fictional");
-		AddVal("Jack"); 		
-			equals(flyMem[4].name,"Jack","Jack accepted");
-			flyMem[4].parent = 1;
-			equals(flyMem[4].parent,1," Jack is Child of Fictional");
-		AddVal("Sparrow"); 		
-			equals(flyMem[5].name,"Sparrow"," Sparrow accepted");
-			flyMem[5].parent = 1;
-			equals(flyMem[5].parent,1," Sparrow is Child of Fictional");
-		AddVal("Johnny");
-			equals(flyMem[6].name,"Johnny"," Johnny accepted");
-			flyMem[6].parent = 2;
-			equals(flyMem[6].parent,2," Johnny is Child of real-life");
-		AddVal("Depp");
-			equals(flyMem[7].name,"Depp"," depp accepted");
-			flyMem[7].parent = 2;
-			equals(flyMem[7].parent,2," Depp is Child of real-life");
-			equals(flyMem[1].child,3," Fictional childs");
+		AddVal("Jack",1); 		
+		AddVal("Sparrow",1); 		
+		AddVal("Johnny",2);
+		AddVal("Depp",2);
 
 		DeleteVal(3);
 				equals(flyMem[3].name,"Jack","Captain deleted and now its" );			
@@ -134,13 +112,11 @@
 			}
 			
 			flyMem[i++] = new Person(txtMemName);
-			
-			if($( "#selectParent option:selected" ).val() || parentVal)
+			if( parentVal == 0 || parentVal || $( "#selectParent option:selected" ).val())
 			{
-
 				var val_parent = ($( "#selectParent option:selected" ).val()) ? $( "#selectParent option:selected" ).val()  : parentVal ;	
 				flyMem[i-1].parent =  val_parent ;
-				
+				alert(flyMem[i-1].parent + flyMem[i-1].name);
 				flyMem[i-1].key = i-1;
 				flyMem[val_parent].child +=1;
 				
