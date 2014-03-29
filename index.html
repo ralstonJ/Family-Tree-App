@@ -95,7 +95,11 @@ $(document).ready(function(){
 					if((flyMem.length - cnt == n_child)  && flyMem[i].parent == flyMem[i+1].parent)
 					{	
 						//Delete all till end, No need to adjust space with array
+						flyMem.splice(i,n_child);
 						
+						flyMem[id_flyMem].child = flyMem[id_flyMem +1].child;  
+						flyMem[id_flyMem].parent = flyMem[id_flyMem +1].parent;  
+						flyMem[id_flyMem].name = flyMem[id_flyMem +1].name;  
 					}
 					
 				}				
