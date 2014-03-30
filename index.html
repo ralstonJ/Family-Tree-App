@@ -65,7 +65,7 @@
 			// function to clear objects from <select> and re-load. Also clear Textdox
 		function ClearVal()
 		{
-
+			$(".tr_remove" ).remove();
 			$("select").empty();
 			$(".div_display").empty();
 			$(".div_display").append("<p>Number of elements in the list " + flyMem.length +"</p>");	
@@ -74,8 +74,10 @@
 				
 				if(flyMem[key].name != null)
 				{
-					$("select").append("<option value='"+flyMem[key].key+"'>"+ flyMem[key].name +"</option>");
-					$("#list_people tr:last").after("<tr><td> " + flyMem[key].name + "</td><td>" + flyMem[key].parent + "</td><td>" + flyMem[key].child + "</td><td>" + flyMem[key].firstChild + "</td><td>" + flyMem[key].lastNode + "</td><td>" + flyMem[key].nextNode + "</td><td>" + flyMem[key].prevNode +"</td></tr>");	
+				
+					$("select").append("<option value='"+key+"'>"+ flyMem[key].name +"</option>");
+					
+					$("#list_people tr:last").after("<tr class='tr_remove'><td> " + flyMem[key].name + "</td><td>" + flyMem[key].parent + "</td><td>" + flyMem[key].child + "</td><td>" + flyMem[key].firstChild + "</td><td>" + flyMem[key].lastNode + "</td><td>" + flyMem[key].nextNode + "</td><td>" + flyMem[key].prevNode +"</td></tr>");	
 				}
 			}
 			
@@ -146,6 +148,7 @@
 				equals(flyMem[6].lastNode,null,"lastNode is null for Frank" );		
 				equals(flyMem[6].child,null,"child is null for Frank" );				
 				equals(flyMem[6].parent,null,"parent is null for Frank");				
+		
 		});		
 		// function to add node to tree
 		function AddVal(txtMemName,parentVal)
@@ -160,7 +163,7 @@
 			}
 			
 			flyMem[i++] = new Person(txtMemName);
-			if( parentVal == 0 || parentVal || $( "#selectParent option:selected" ).val())
+			if( parentVal > 0 || $( "#selectParent option:selected" ).val())
 			{
 				var val_parent = ($( "#selectParent option:selected" ).val()) ? $( "#selectParent option:selected" ).val()  : parentVal ;	
 				flyMem[i-1].parent =  val_parent ;
@@ -207,19 +210,31 @@
 					if(flyMem[cur_id].prevNode)
 					{
 						flyMem[flyMem[cur_id].prevNode].nextNode = flyMem[cur_id].nextNode; 
-					
+						
 					}							
 					
 					if(flyMem[flyMem[cur_id].parent].child >0)
 						flyMem[flyMem[cur_id].parent].child -= 1;
-
+					if(!flyMem[cur_id].nextNode && flyMem[cur_id].prevNode)
+					{
+						flyMem[flyMem[cur_id].parent].lastNode = flyMem[cur_id].prevNode;
+					}
+					if(!flyMem[cur_id].nextNode && !flyMem[cur_id].prevNode)
+					{
+						flyMem[flyMem[cur_id].parent].firstChild = null;
+						flyMem[flyMem[cur_id].parent].lastNode = null;
+					
+					}	
+						
 					flyMem[cur_id].nextNode = null;
 					flyMem[cur_id].prevNode = null;
 					flyMem[cur_id].firstChild = null;
 					flyMem[cur_id].lastNode = null;
 					flyMem[cur_id].child = null;
-					
 					$(".div_warn").append("<p>" + flyMem[cur_id].name  +" has been deleted</p>");						
+		
+					flyMem[cur_id] = null;
+					
 				}
 			}		
 				if(flyMem[id_flyMem].nextNode)
@@ -231,7 +246,7 @@
 					if(flyMem[id_flyMem].prevNode)
 					{
 						flyMem[flyMem[id_flyMem].prevNode].nextNode = flyMem[id_flyMem].nextNode; 
-					
+						
 					}
 						
 					if(flyMem[flyMem[id_flyMem].parent].child >0)
@@ -359,7 +374,7 @@
 
 		</script>   
 		</div> 
-				<h1 id="qunit-header">QUnit Testing  Family Tree App</h1>
+		<h1 id="qunit-header">QUnit Testing  Family Tree App</h1>
 		<h2 id="qunit-banner"></h2>
 		<h2 id="qunit-userAgent"></h2>
 		<ol id="qunit-tests">
