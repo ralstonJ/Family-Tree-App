@@ -41,6 +41,8 @@
 		
 		var i = 0
 		var flyMem = new Array();
+		// Cache empty space to add ne elements
+		var cacheMem = new Array();
 		
 		function Person(name) 
 		{
@@ -143,22 +145,31 @@
 				console.warn("Valid Name must be entered in Textdox");
 				return;
 			}
-			
-			flyMem[i++] = new Person(txtMemName);
+			var memObj;
+			if(cacheMem.length) 
+			{
+				memObj = cacheMem[0];				
+			}
+			else 
+			{
+				flyMem[i++] = new Person(txtMemName);
+				memObj = i-1;
+			}
 			if( parentVal >=0 || $( "#selectParent option:selected" ).val())
 			{
 				var val_parent = ($( "#selectParent option:selected" ).val()) ? $( "#selectParent option:selected" ).val()  : parentVal ;	
-				flyMem[i-1].parent =  val_parent ;
-				flyMem[i-1].key = i-1;
+				flyMem[memObj].parent =  val_parent;
 				flyMem[val_parent].child +=1;
-				console.log("for : " + (i-1) + " parnet node last node "+ flyMem[val_parent].lastNode);
+				console.log("for : " + memObj + " parnet node last node "+ flyMem[val_parent].lastNode);
 				// Add key value as firstchild or nextNode and update lastNode
-				if(!flyMem[val_parent].firstChild) flyMem[val_parent].firstChild = i-1;
-				else flyMem[flyMem[val_parent].lastNode].nextNode = i-1;
+				if(!flyMem[val_parent].firstChild) flyMem[val_parent].firstChild = memObj;
+				else flyMem[flyMem[val_parent].lastNode].nextNode = memObj;
 			
-				flyMem[i-1].prevNode = flyMem[val_parent].lastNode;
-				flyMem[val_parent].lastNode = i-1;		
+				flyMem[memObj].prevNode = flyMem[val_parent].lastNode;
+				flyMem[val_parent].lastNode = memObj;		
 			}
+			
+			
 			
 		}
 		
