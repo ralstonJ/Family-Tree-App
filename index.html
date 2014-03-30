@@ -62,7 +62,7 @@
 
 		}
 
-			// function to clear objects from <select> and re-load. Also clear Textdox
+			// function to clear objects from <select> and re-load. Also clear Textbox
 		function ClearVal()
 		{
 			$(".tr_remove" ).remove();
@@ -139,8 +139,8 @@
 			if(!txtMemName)
 			{
 
-				$(".div_warn").append("<p>Valid Name must be entered in Textdox</p>");	
-				console.warn("Valid Name must be entered in Textdox");
+				$(".div_warn").prepend("<p>Valid Name must be entered in Textbox</p>");	
+				console.warn("Valid Name must be entered in Textbox");
 				return;
 			}
 			
@@ -162,72 +162,73 @@
 			
 		}
 		
-		function AssignNull(id) //End result of function to assign null value to deleted object
-{
-	
-	if(flyMem[id].nextNode)
-					{
-						flyMem[flyMem[id].nextNode].prevNode = flyMem[id].prevNode; 
-						console.log(id + " has successfully transfered its prev Node");
-					}
-
-	if(flyMem[id].prevNode)
-					{
-						flyMem[flyMem[id].prevNode].nextNode = flyMem[id].nextNode; 
-						console.log(id + " has successfully transfered next Node");
-					}
-	if(flyMem[flyMem[id].parent] && flyMem[flyMem[id].parent].child > 0)
-					{
-						flyMem[flyMem[id].parent].child -= 1;
-						console.log(flyMem[id].parent + "'s number of child(ren) decremented by 1 to " +  flyMem[flyMem[id].parent].child);
-					}
-	if(!flyMem[id].nextNode && flyMem[id].prevNode)
-					{
-						flyMem[flyMem[id].parent].lastNode = flyMem[id].prevNode;
-						console.log(flyMem[id].parent + " last node now is " + flyMem[id].prevNode );
-						
-					}
-	if(flyMem[flyMem[id].parent] && !flyMem[id].nextNode && !flyMem[id].prevNode)
-					{
-						flyMem[flyMem[id].parent].firstChild = null;
-						console.log(flyMem[id].parent + " firstchild now is null ");
-						flyMem[flyMem[id].parent].lastNode = null;
-						console.log(flyMem[id].parent + " lastnode now is null ");					
-					}	
-
-	flyMem[id].nextNode = null;
-	flyMem[id].prevNode = null;
-	flyMem[id].firstChild = null;
-	flyMem[id].lastNode = null;
-	flyMem[id].child = null;
-	$(".div_warn").append("<p>" + flyMem[id].name  +" has been deleted</p>");
-	flyMem[id] = null;
-	console.log("deleted successfully " + id);
-}
+	function AssignNull(id) //End result of function to assign null value to deleted object
+		{
+			
+			if(flyMem[id].nextNode)
+							{
+								flyMem[flyMem[id].nextNode].prevNode = flyMem[id].prevNode; 
+								console.log("Node " +id + " has successfully transfered its prev Node");
+							}
+							
 		
-		function DeleteVal(id_flyMem){
+			if(flyMem[id].prevNode)
+							{
+								flyMem[flyMem[id].prevNode].nextNode = flyMem[id].nextNode; 
+								console.log("Node " + id + " has successfully transfered next Node");
+							}
+			if(flyMem[flyMem[id].parent] && flyMem[flyMem[id].parent].child > 0)
+							{
+								flyMem[flyMem[id].parent].child -= 1;
+								console.log("Node " +flyMem[id].parent + "'s number of child(ren) decremented by 1 to " +  flyMem[flyMem[id].parent].child);
+							}
+			if(!flyMem[id].nextNode && flyMem[id].prevNode)
+							{
+								flyMem[flyMem[id].parent].lastNode = flyMem[id].prevNode;
+								console.log("Node " + flyMem[id].parent + "'s last node now is " + flyMem[id].prevNode );
+								
+							}
+			if(flyMem[flyMem[id].parent] && !flyMem[id].nextNode && !flyMem[id].prevNode)
+							{
+								flyMem[flyMem[id].parent].firstChild = null;
+								console.log("Node " +flyMem[id].parent + "'s firstchild now is null ");
+								flyMem[flyMem[id].parent].lastNode = null;
+								console.log("Node " +flyMem[id].parent + "'s lastnode now is null ");					
+							}	
 		
+			flyMem[id].nextNode = null;
+			flyMem[id].prevNode = null;
+			flyMem[id].firstChild = null;
+			flyMem[id].lastNode = null;
+			flyMem[id].child = null;
+			$(".div_warn").append("<p>" + flyMem[id].name  +" has been deleted</p>");
+			flyMem[id] = null;
+			console.log("deleted successfully " + id);
+		}
+		
+		function DeleteVal(id_flyMem)
+	`	{
 			if(!flyMem[id_flyMem]){
 				
 				$(".div_warn").append("Delete opereation Cannot work with empty dropDown");
 				console.warn("Delete opeartion Cannot work with empty dropDown");
 				return;
 			}
-			console.log("Enter " + id_flyMem);
+			console.log("Enter Node " + id_flyMem);
 			n_child = flyMem[id_flyMem].child ;	
-			console.log("parent approachjing to change nxt node : " +id_flyMem +" nextnode: "+ flyMem[id_flyMem].nextNode);	
-			console.log("Number of children in " + id_flyMem + " : " + n_child) ;
+			console.log("Node : " +id_flyMem +" has nextNode: "+ flyMem[id_flyMem].nextNode);	
+			console.log("Number of children in Node " + id_flyMem + " : " + n_child) ;
 			if(n_child != 0)
 			{
-				console.log( id_flyMem + " Enter loop for " + n_child + " number of times");
+				console.log("Ndoe " + id_flyMem + " will loop " + n_child + " times");
 
 				for(var k = 0;  k < n_child; k++)
 				{
 					var cur_id =flyMem[id_flyMem].lastNode;
-					console.log( id_flyMem + " Entered in for loop where last node is " + cur_id + ", Kth value is :"  +k);
+					console.log("Node " + id_flyMem + "'s last node is " + cur_id + ", loop interatation :"  +k);
 					
 					if(flyMem[cur_id].child)
-					{	console.log(cur_id + " has children further");
+					{	console.log("Node " + cur_id + " has children further");
 						DeleteVal(cur_id);
 					}
 
@@ -248,8 +249,8 @@
 				return;
 			}
 			
-			$(".div_warn").append("Cannot work with empty Textdox or empty dropDown");
-			console.warn("Cannot work with empty Textdox or empty dropDown");
+			$(".div_warn").append("Cannot work with empty Textbox or empty dropDown");
+			console.warn("Cannot work with empty Textbox or empty dropDown");
 
 		}
 		
@@ -263,8 +264,8 @@
 				return;
 			}
 			
-			$(".div_warn").append("Position button Cannot work with empty Textdox or empty dropDown");
-			console.warn("Position button Cannot work with empty Textdox or empty dropDown");
+			$(".div_warn").append("Position button Cannot work with empty Textbox or empty dropDown");
+			console.warn("Position button Cannot work with empty Textbox or empty dropDown");
 			
 			
 		});
@@ -300,8 +301,8 @@
 			var id_flyMem = $("#selectParent").val();
 			if(!flyMem[id_flyMem])
 			{
-				$(".div_warn").append("Get Grand Parent Node Cannot work with empty Textdox or empty dropDown");
-				console.warn("Get Grand Parent Node Cannot work with empty Textdox or empty dropDown");
+				$(".div_warn").append("Get Grand Parent Node Cannot work with empty Textbox or empty dropDown");
+				console.warn("Get Grand Parent Node Cannot work with empty Textbox or empty dropDown");
 				return;
 			}
 			
@@ -330,7 +331,7 @@
 		module("Test for all the GUI elements");
 		test( "All required elements exist", 6, function() {
 			ok($("#selectParent").length != 0, "DropDown Box exists");
-		    ok($("#txtMemName").length != 0, "Textdox exists");
+		    ok($("#txtMemName").length != 0, "Textbox exists");
 		    ok($("#btn_Add").length != 0, "Add Button exists");
 			ok($("#btn_Rename").length != 0, "Rename Button exists");
 			ok($("#btn_Delete").length != 0, "Delete Button exists");
@@ -339,8 +340,8 @@
 		module("Test Elements when user clicks on add button");
 		test("All required element exist", 2,function(){
 			
-			ok($("input").length !=0," Textdox exists");
-			ok($("input").empty()," Textdox is empty");		
+			ok($("input").length !=0," Textbox exists");
+			ok($("input").empty()," Textbox is empty");		
 			
 			
 			
