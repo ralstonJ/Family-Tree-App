@@ -35,10 +35,13 @@
 		</table>
 		<script type="text/javascript" src="resources/js/func_FT.js"></script>
 		</div> 
+		<?php
+echo "Hello World!";
+?>
 		<div>
-			<?php
+			<!--<
 					echo "Have a good day!";
-			/*	$con = mysqli_connect("l5jez29oe1.database.windows.net,1433","Family-Tree","rafamilytree","R@family3");	
+				$con = mysqli_connect("l5jez29oe1.database.windows.net,1433","Family-Tree","rafamilytree","R@family3");	
 				
 				
 				// Check connection
@@ -48,7 +51,8 @@
 				}
 				echo "hi";
 				mysqli_close($con);
-				*/?>
+				?>
+				-->
 		</div>
 		<h1 id="qunit-header">QUnit Testing  Family Tree App</h1>
 		<h2 id="qunit-banner"></h2>
