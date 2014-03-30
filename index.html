@@ -70,9 +70,9 @@
 			$(".div_display").empty();
 			$(".div_display").append("<p>Number of elements in the list " + flyMem.length +"</p>");	
 			
-			for(var key in flyMem){
+			for(var key = 0; key<flyMem.length;key++){
 				
-				if(flyMem[key].name != null)
+				if(flyMem[key]!= null)
 				{
 				
 					$("select").append("<option value='"+key+"'>"+ flyMem[key].name +"</option>");
