@@ -4,7 +4,7 @@
 		<link rel="icon" type="image/png" href="/img/icon.png">
 		<link type="text/css" rel="stylesheet" href="resources/css/Home.css" />
 		<link rel="stylesheet" href="resources/css/qunit.css" type="text/css" media="screen" />
-		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="https://code.jquery.com/jquery-latest.js"></script>
 		<script type="text/javascript" src="resources/js/qunit.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>		
 	</head>
@@ -37,7 +37,7 @@
 		</div> 
 		<div>
 			<?php
-
+  echo "Have a good day!";
 				$con = mysqli_connect("l5jez29oe1.database.windows.net,1433","Family-Tree","rafamilytree","R@family3");	
 				
 				
