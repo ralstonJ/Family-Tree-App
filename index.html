@@ -104,16 +104,13 @@
 		AddVal("Sam",3);
 		AddVal("Sophia",3);
 		AddVal("Mary",7);
-		for(var test_i = 0; test_i <1000; test_i++)
-		{
-				AddVal("Mary" + test_i,0);
-		}
+		
 		// Delete Charles
 		
 		DeleteVal(2);
 				equals(flyMem[0].name,"Randall","Yes its Randall " );
-	//			equals(flyMem[0].lastNode,3,"Yes Randalls right most child is 3 " );
-	//			equals(flyMem[0].child,2,"No. of children with Randall is 2 " );
+				equals(flyMem[0].lastNode,3,"Yes Randalls right most child is 3 " );
+				equals(flyMem[0].child,2,"No. of children with Randall is 2 " );
 				equals(flyMem[1].parent,0,"parent is 0 for Betty");
 				equals(flyMem[1].name,"Betty","Betty it is" );	
 				equals(flyMem[1].firstChild,null,"firstChild is null for Betty");
@@ -125,14 +122,14 @@
 				equals(flyMem[2],null,"Charles is null");
 				equals(flyMem[3].name,"David","David it is" );	
 				equals(flyMem[3].firstChild,7,"firstChild is 7 for David");
-	//			equals(flyMem[3].nextNode,null,"nextNode is null for David");		
+				equals(flyMem[3].nextNode,null,"nextNode is null for David");		
 				equals(flyMem[3].prevNode,1,"prevNode is 1 for David" );		
 				equals(flyMem[3].lastNode,8,"lastNode is 8 for David" );		
 				equals(flyMem[3].child,2,"child is 2 for David" );				
 				equals(flyMem[4],null,"Rebecca is null");
 				equals(flyMem[5],null,"Thomas is null");
 				equals(flyMem[6],null,"Frank is null");
-			equals(flyMem[3].name,"David","David exists");
+				equals(flyMem[3].name,"David","David exists");
 				
 		});		
 		// function to add node to tree
@@ -210,7 +207,7 @@
 					
 					if(flyMem[flyMem[cur_id].parent].child >0)
 						{flyMem[flyMem[cur_id].parent].child -= 1;
-						console.log(flyMem[cur_id].parent + " child number decremented");
+						console.log(flyMem[cur_id].parent + " child number decremented to " + flyMem[flyMem[cur_id].parent].child);
 						}
 					if(!flyMem[cur_id].nextNode && flyMem[cur_id].prevNode)
 					{
@@ -253,10 +250,10 @@
 						
 					}
 				console.log("parent approachjing : " + id_flyMem + " to decrement by 1 (parent) : " + flyMem[id_flyMem].parent);		
-					if(flyMem[id_flyMem].parent && flyMem[flyMem[id_flyMem].parent].child > 0)
+					if(flyMem[flyMem[id_flyMem].parent] && flyMem[flyMem[id_flyMem].parent].child > 0)
 						{
 						flyMem[flyMem[id_flyMem].parent].child -= 1;
-						console.log("parent: " +flyMem[id_flyMem].parent + " child decremented");
+						console.log("parent: " +flyMem[id_flyMem].parent + " child decremented by 1 to " +  flyMem[flyMem[id_flyMem].parent].child);
 						}
 					if(!flyMem[id_flyMem].nextNode && flyMem[id_flyMem].prevNode)
 					{
@@ -264,7 +261,7 @@
 						console.log("Parent : "+ flyMem[id_flyMem].parent + " last node now is " + flyMem[id_flyMem].prevNode );
 						
 					}
-					if(flyMem[id_flyMem].parent && !flyMem[id_flyMem].nextNode && !flyMem[id_flyMem].prevNode)
+					if(flyMem[flyMem[id_flyMem].parent] && !flyMem[id_flyMem].nextNode && !flyMem[id_flyMem].prevNode)
 					{
 						flyMem[flyMem[id_flyMem].parent].firstChild = null;
 						console.log("Parent : "+ flyMem[id_flyMem].parent + " firstchild now is null ");
