@@ -6,11 +6,11 @@
 		
 		function Person(name) 
 		{
-			// Lets node knwo if it has a parent
-			this.parent = null;
-			
 			// The data that is required to show
 			this.name = name;
+			
+			// Lets node knwo if it has a parent
+			this.parent = null;
 			
 			this.firstChild = null;
 			
