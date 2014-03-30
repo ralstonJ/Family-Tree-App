@@ -1,284 +1,42 @@
-<html>
-	<head>
-		<title>Family Tree App by Ralston ALmeida </title>
-		<link rel="icon" type="image/png" href="./icon.png">
-		<link type="text/css" rel="stylesheet" href="Home.css" />
-		<link rel="stylesheet" href="resources/qunit.css" type="text/css" media="screen" />
-		<script src="http://code.jquery.com/jquery-latest.js"></script>
-		<script type="text/javascript" src="resources/qunit.js"></script>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>		
-	</head>
-	<body>
+function AssignNull(id) //End result of function to assign null value to deleted object
+{
 	
-	<div class="top-div">
-	     
-		<h1 id="qunit-header">QUnit Testing  Family Tree App</h1>
-		<h2 id="qunit-banner"></h2>
-		<h2 id="qunit-userAgent"></h2>
-		<ol id="qunit-tests">
-		</ol>	
-	<div class="div_txt"> Welcome to Family Tree</div>
-	<select id="selectParent"> </select>
-	<input  id="txtMemName" type="text"> </input>
-	<button id="btn_Add">Add Node</button> 
-	<button id="btn_Rename">Rename Node</button>
-	<button id="btn_Delete">Delete Node</button>
-	<button id="btn_Position">Position Node</button>
-	<button id="btn_Get_Grand_Node">Get Grand-Parent Node</button>
-	<div class="div_display">
-	</div>
-	<div class="div_warn">
-	</div>
-
-	<script>
-	$(document).ready(function(){
-		
-		var i = 0
-		var flyMem = new Array();
-		
-		function Person(name) 
-		{
-			// Lets node knwo if it has a parent
-			this.parent = null;
-			
-			// The data that is required to show
-			this.name = name;
-			
-			this.rightNode = null;
-			
-			this.leftNode = null;
-			this.firstChild = null;
-			this.rightMostChild = null;
-			// A count, to keep track of the number of children
-			this.child = 0;
-			
-
-		}
-
-			// function to clear objects from <select> and re-load. Also clear TextBox
-		function ClearVal()
-		{
-
-			$("select").empty();
-			$(".div_display").empty();
-			$(".div_display").append("<p>Number of elements in the list " + flyMem.length +"</p>");	
-			
-			for(var key in flyMem){
-				
-				if(flyMem[key].name != null)
-				{
-					$("select").append("<option value='"+flyMem[key].key+"'>"+ flyMem[key].name +"</option>");
-					$(".div_display").append("<p> Name:	" + flyMem[key].name + "	Parent:	" + flyMem[key].parent + "	NChild:	" + flyMem[key].child + "	FirstChild:	" + flyMem[key].firstChild + "	rightNode:	" + flyMem[key].rightNode + "	rightMostChild:	" + flyMem[key].rightMostChild + "	PrevNode:	" + flyMem[key].leftNode +"</p>");	
-				}
-			}
-			
-			$("input").val('');
-		}
-
-		//Qunit Test -- Add
-		module("Test for add elements");
-		test("",30,function(){
-		
-		AddVal("Alias"); 
-		AddVal("Fictional",0); 		
-		AddVal("Real-life",0);
-		AddVal("Captain",1);
-		AddVal("Jack",1); 
-		AddVal("Pearl",1);		
-		AddVal("Sparrow",1);
- 		
-		AddVal("Johnny",2);
-		AddVal("Depp",2);
-
-		DeleteVal(3);
-				equals(flyMem[3].name,"Captain","Captain it is" );			
-				equals(flyMem[3].prevNode,null,"is null for captain" );
-				equals(flyMem[1].name,"Fictional","Yes its " );
-				equals(flyMem[1].rightMostChild,6,"Yes rightMostChild is 6 " );
-				equals(flyMem[1].child,3,"Yes child its " );
-		DeleteVal(5);	
-				equals(flyMem[5].name,"Sparrow","Pearl deleted and now its" );			
-				
-		});		
-		// function to add node to tree
-		function AddVal(txtMemName,parentVal)
-		{
-
-			if(!txtMemName)
-			{
-
-				$(".div_warn").append("<p>Valid Name must be entered in TextBox</p>");	
-				console.warn("Valid Name must be entered in TextBox");
-				return;
-			}
-			
-			flyMem[i++] = new Person(txtMemName);
-			if( parentVal == 0 || parentVal || $( "#selectParent option:selected" ).val())
-			{
-				var val_parent = ($( "#selectParent option:selected" ).val()) ? $( "#selectParent option:selected" ).val()  : parentVal ;	
-				flyMem[i-1].parent =  val_parent ;
-				flyMem[i-1].key = i-1;
-				flyMem[val_parent].child +=1;
-				
-				// Add key value as firstchild or rightNode and update rightMostChild
-				if(!flyMem[val_parent].firstChild) flyMem[val_parent].firstChild = i-1;
-				else flyMem[flyMem[val_parent].rightMostChild].rightNode = i-1;
-			
-				flyMem[i-1].leftNode = flyMem[val_parent].rightMostNode;
-				flyMem[val_parent].rightMostNode = i-1;		
-			}
-			
-		}
-		
-		function DeleteVal(id_flyMem){
-		
-			if(!flyMem[id_flyMem]){
-				
-				$(".div_warn").append("Delete opereation Cannot work with empty dropDown");
-				console.warn("Delete opeartion Cannot work with empty dropDown");
-				return;
-			}
-			n_child = flyMem[id_flyMem].child + 1;	
-			if(n_child != 0)
-			{
-				for(var k = 0;  k < n_child; k++)
-				{
-					var cur_id =flyMem[id_flyMem].rightMostChild;
-					if(flyMem[cur_id].child)
+	if(flyMem[id].nextNode)
 					{
-						DeleteVal(cur_id);
+						flyMem[flyMem[id].nextNode].prevNode = flyMem[id].prevNode; 
+						console.log(id + " has successfully transfered its prev Node");
 					}
-					
-					if(flyMem[cur_id].rightNode)
+
+	if(flyMem[id].prevNode)
 					{
-						flyMem[flyMem[cur_id].rightNode].prevNode = flyMem[cur_id].prevNode; 
-				
-					
+						flyMem[flyMem[id].prevNode].nextNode = flyMem[id].nextNode; 
+						console.log(id + " has successfully transfered next Node");
 					}
-					
-					if(flyMem[cur_id].prevNode)
+	if(flyMem[flyMem[id].parent] && flyMem[flyMem[id].parent].child > 0)
 					{
-						flyMem[flyMem[cur_id].prevNode].rightNode = flyMem[cur_id].rightNode; 
-					
-					}							
-					
-					if(flyMem[flyMem[cur_id].parent].child >0)
-						flyMem[flyMem[cur_id].parent].child -= 1;
-				
-				}
-			}		
-			$(".div_warn").append("<p>" + flyMem[id_flyMem].name  +" has been deleted</p>");
-		}
-				
-		function RenameVal(txtMemName)
-		{
-			var id_flyMem = $("#selectParent").val();
-			if(id_flyMem && txtMemName)
-			{
-				flyMem[id_flyMem].name = txtMemName;
-				return;
-			}
-			
-			$(".div_warn").append("Cannot work with empty TextBox or empty dropDown");
-			console.warn("Cannot work with empty TextBox or empty dropDown");
+						flyMem[flyMem[id].parent].child -= 1;
+						console.log(flyMem[id].parent + "'s number of child(ren) decremented by 1 to " +  flyMem[flyMem[id].parent].child);
+					}
+	if(!flyMem[id].nextNode && flyMem[id].prevNode)
+					{
+						flyMem[flyMem[id].parent].lastNode = flyMem[id].prevNode;
+						console.log(flyMem[id].parent + " last node now is " + flyMem[id].prevNode );
+						
+					}
+	if(flyMem[flyMem[id].parent] && !flyMem[id].nextNode && !flyMem[id].prevNode)
+					{
+						flyMem[flyMem[id].parent].firstChild = null;
+						console.log(flyMem[id].parent + " firstchild now is null ");
+						flyMem[flyMem[id].parent].lastNode = null;
+						console.log(flyMem[id].parent + " lastnode now is null ");					
+					}	
 
-		}
-		
-		
-		$("#btn_Position").click(function(){
-			$(".div_warn").empty();
-			var id_flyMem = $("#selectParent").val();
-			if(id_flyMem)
-			{
-				$(".div_warn").append("<p>Position of " + flyMem[id_flyMem].name + " : " + id_flyMem + "</p>");
-				return;
-			}
-			
-			$(".div_warn").append("Position button Cannot work with empty TextBox or empty dropDown");
-			console.warn("Position button Cannot work with empty TextBox or empty dropDown");
-			
-			
-		});
-		$("#btn_Add").click(function(){
-			
-			$(".div_warn").empty();
-			var txtMemName = $('input:text[id="txtMemName"]').val();
-			AddVal(txtMemName);
-			ClearVal();
-		});
-		
-		$("#btn_Rename").click(function(){
-			
-			$(".div_warn").empty();
-			var txtMemName = $('input:text[id="txtMemName"]').val();
-			RenameVal(txtMemName);
-			ClearVal();
-
-		});
-	  
-	  
-		$("#btn_Delete").click(function(){
-			$(".div_warn").empty();
-			var id_flyMem = $("#selectParent").val();
-			DeleteVal(id_flyMem);
-			ClearVal();
-			
-		});
-		
-		$("#btn_Get_Grand_Node").click(function(){
-			
-			$(".div_warn").empty();
-			var id_flyMem = $("#selectParent").val();
-			if(!flyMem[id_flyMem])
-			{
-				$(".div_warn").append("Get Grand Parent Node Cannot work with empty TextBox or empty dropDown");
-				console.warn("Get Grand Parent Node Cannot work with empty TextBox or empty dropDown");
-				return;
-			}
-			
-			ClearVal();
-				
-			if(flyMem[id_flyMem].parent !=null &&flyMem[flyMem[id_flyMem].parent].parent !=null )
-			{		
-				alert("Grand parent exist!");
-				
-				$(".div_display").append("<p>Grand Parent of " +flyMem[id_flyMem].name + " is " + flyMem[flyMem[flyMem[id_flyMem].parent].parent].name + " </p>");
-			
-			}
-			else
-				alert("Grand parent does not exist!");
-			
-		
-		});	
-	  });
-		QUnit.log = function(result, message)
-		{
-			if (window.console && window.console.log)
-			{
-				window.console.log(result +' :: '+ message);
-			}
-		} 
-		module("Test for all the GUI elements");
-		test( "All required elements exist", 6, function() {
-			ok($("#selectParent").length != 0, "DropDown Box exists");
-		    ok($("#txtMemName").length != 0, "TextBox exists");
-		    ok($("#btn_Add").length != 0, "Add Button exists");
-			ok($("#btn_Rename").length != 0, "Rename Button exists");
-			ok($("#btn_Delete").length != 0, "Delete Button exists");
-			ok($("#btn_Get_Grand_Node").length != 0, "Get Grand Parent exists");
-		});
-		module("Test Elements when user clicks on add button");
-		test("All required element exist", 2,function(){
-			
-			ok($("input").length !=0," TextBox exists");
-			ok($("input").empty()," TextBox is empty");		
-			
-			
-			
-		});
-
-		</script>   
-		</div> 
-	</body>
-
-</html>
+	flyMem[id].nextNode = null;
+	flyMem[id].prevNode = null;
+	flyMem[id].firstChild = null;
+	flyMem[id].lastNode = null;
+	flyMem[id].child = null;
+	$(".div_warn").append("<p>" + flyMem[id].name  +" has been deleted</p>");
+	flyMem[id] = null;
+	console.log("deleted successfully " + id);
+}
