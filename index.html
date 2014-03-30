@@ -11,6 +11,7 @@
 	<body>
 	
 	<div class="top-div">
+
 	<div class="div_txt"> Welcome to Family Tree</div>
 	<select id="selectParent"> </select>
 	<input  id="txtMemName" type="text"> </input>
@@ -19,6 +20,8 @@
 	<button id="btn_Delete">Delete Node</button>
 	<button id="btn_Position">Position Node</button>
 	<button id="btn_Get_Grand_Node">Get Grand-Parent Node</button>
+	<div class="div_warn">
+	</div>
 	<div class="div_display">
 	</div>
 	<table id="list_people">
@@ -33,8 +36,7 @@
 	</tr>
 
 	</table>
-	<div class="div_warn">
-	</div>
+
 
 	<script>
 	$(document).ready(function(){
@@ -207,7 +209,7 @@
 		}
 		
 		function DeleteVal(id_flyMem)
-	`	{
+		{
 			if(!flyMem[id_flyMem]){
 				
 				$(".div_warn").append("Delete opereation Cannot work with empty dropDown");
