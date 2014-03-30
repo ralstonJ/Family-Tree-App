@@ -78,7 +78,7 @@
 
 		//Qunit Test -- Add
 		module("Test for add elements");
-		test("",10,function(){
+		test("",17,function(){
 		
 		AddVal("Randall"); 
 		AddVal("Betty",0); 		
@@ -95,6 +95,9 @@
 		// Delete Charles
 		
 		DeleteVal(2);
+				equals(flyMem[0].name,"Randall","Yes its Randall " );
+				equals(flyMem[0].lastNode,3,"Yes Randalls right most child is 3 " );
+				equals(flyMem[0].child,2,"No. of children with Randall is 2 " );
 				equals(flyMem[2].parent,null,"parent is null for Charles");
 				equals(flyMem[2].name,"Charles","Charles it is" );	
 				equals(flyMem[2].firstChild,null,"firstChild is null for Charles");
@@ -102,10 +105,14 @@
 				equals(flyMem[2].prevNode,null,"prevNode is null for Charles" );		
 				equals(flyMem[2].lastNode,null,"lastNode is null for Charles" );		
 				equals(flyMem[2].child,null,"child is null for Charles" );				
-				equals(flyMem[0].name,"Randall","Yes its Randall " );
-				equals(flyMem[0].lastNode,3,"Yes Randalls right most child is 3 " );
-				equals(flyMem[0].child,2,"No. of children with Randall is 2 " );
-					
+				equals(flyMem[1].parent,0,"parent is 0 for Betty");
+				equals(flyMem[1].name,"Betty","Betty it is" );	
+				equals(flyMem[1].firstChild,null,"firstChild is null for Betty");
+				equals(flyMem[1].nextNode,3,"nextNode is 3 for Betty");		
+				equals(flyMem[1].prevNode,null,"prevNode is null for Betty" );		
+				equals(flyMem[1].lastNode,null,"lastNode is null for Betty" );		
+				equals(flyMem[1].child,0,"child is null for Betty" );				
+
 				
 		});		
 		// function to add node to tree
