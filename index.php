@@ -40,12 +40,13 @@
 
 				$con = mysqli_connect("l5jez29oe1.database.windows.net,1433","Family-Tree","rafamilytree","R@family3");	
 				
+				
 				// Check connection
 				if (mysqli_connect_errno())
 				{
 				echo "Failed to connect to MySQL: " . mysqli_connect_error();
 				}
-				
+				echo "hi";
 				mysqli_close($con);
 				?>
 		</div>
