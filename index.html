@@ -68,19 +68,20 @@
 			$(".tr_remove" ).remove();
 			$("select").empty();
 			$(".div_display").empty();
-			$(".div_display").append("<p>Number of elements in the list " + flyMem.length +"</p>");	
-			
+			var cnt_no_of_elements =0;
 			for(var key = 0; key<flyMem.length;key++){
 				
 				if(flyMem[key]!= null)
 				{
-				
+					cnt_no_of_elements ++;	
 					$("select").append("<option value='"+key+"'>"+ flyMem[key].name +"</option>");
 					
 					$("#list_people tr:last").after("<tr class='tr_remove'><td> " + flyMem[key].name + "</td><td>" + flyMem[key].parent + "</td><td>" + flyMem[key].child + "</td><td>" + flyMem[key].firstChild + "</td><td>" + flyMem[key].lastNode + "</td><td>" + flyMem[key].nextNode + "</td><td>" + flyMem[key].prevNode +"</td></tr>");	
 				}
 			}
 			
+			$(".div_display").append("<p>Number of elements in the list " + cnt_no_of_elements +"</p>");	
+		
 			$("input").val('');
 		}
 
@@ -175,19 +176,20 @@
 			console.log("Number of children in " + id_flyMem + " : " + n_child) ;
 			if(n_child != 0)
 			{
-				console.log( id_flyMem + "Enter loop for " + n_child + " number of times");
+				console.log( id_flyMem + " Enter loop for " + n_child + " number of times");
 
 				for(var k = 0;  k < n_child; k++)
 				{
 					var cur_id =flyMem[id_flyMem].lastNode;
-					console.log( id_flyMem + "Entered in for loop where last node is " + cur_id + ", Kth value is :"  +k);
+					console.log( id_flyMem + " Entered in for loop where last node is " + cur_id + ", Kth value is :"  +k);
 					
 					if(flyMem[cur_id].child)
 					{	console.log(cur_id + " has children further");
 						DeleteVal(cur_id);
 					}
-					
-					if(flyMem[cur_id] == null) {console.log("Leave to del " + id_flyMem );break;}
+
+					if(flyMem[cur_id] == null && !flyMem[id_flyMem].lastNode ) { console.log("Leave to del " + id_flyMem + " No.of children: "  );break;}
+					if(flyMem[cur_id] == null) {k++;cur_id =flyMem[id_flyMem].lastNode;}
 					if(flyMem[cur_id].nextNode)
 					{
 						
@@ -247,8 +249,8 @@
 						console.log("parent: " +id_flyMem + " has transferee next Node");
 						
 					}
-				console.log("parent approachjing : " + id_flyMem + " to decrement by 1" );		
-					if(flyMem[flyMem[id_flyMem].parent].child >0)
+				console.log("parent approachjing : " + id_flyMem + " to decrement by 1 (parent) : " + flyMem[id_flyMem].parent);		
+					if(flyMem[id_flyMem].parent && flyMem[flyMem[id_flyMem].parent].child > 0)
 						{
 						flyMem[flyMem[id_flyMem].parent].child -= 1;
 						console.log("parent: " +flyMem[id_flyMem].parent + " child decremented");
@@ -259,7 +261,7 @@
 						console.log("Parent : "+ flyMem[id_flyMem].parent + " last node now is " + flyMem[id_flyMem].prevNode );
 						
 					}
-					if(!flyMem[id_flyMem].nextNode && !flyMem[id_flyMem].prevNode)
+					if(flyMem[id_flyMem].parent && !flyMem[id_flyMem].nextNode && !flyMem[id_flyMem].prevNode)
 					{
 						flyMem[flyMem[id_flyMem].parent].firstChild = null;
 						console.log("Parent : "+ flyMem[id_flyMem].parent + " firstchild now is null ");
@@ -274,7 +276,7 @@
 			flyMem[id_flyMem].child = null;
 			$(".div_warn").append("<p>" + flyMem[id_flyMem].name  +" has been deleted</p>");
 			flyMem[id_flyMem] = null;
-			console.log("deleted successfully" + id_flyMem);
+			console.log("deleted successfully " + id_flyMem);
 		}
 				
 		function RenameVal(txtMemName)
