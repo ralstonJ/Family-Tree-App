@@ -40,8 +40,6 @@
 		{
 			// Lets node knwo if it has a parent
 			this.parent = null;
-			// key
-			this.key = 0;
 			
 			// The data that is required to show
 			this.name = name;
@@ -80,27 +78,35 @@
 
 		//Qunit Test -- Add
 		module("Test for add elements");
-		test("",30,function(){
+		test("",10,function(){
 		
-		AddVal("Alias"); 
-		AddVal("Fictional",0); 		
-		AddVal("Real-life",0);
-		AddVal("Captain",1);
-				equals(flyMem[3].prevNode,null,"Captain prevNode now points to null" );
-				equals(flyMem[3].nextNode,null,"Captain nextNode now points to null" );
-			
-		AddVal("Jack",1); 		
-		AddVal("Sparrow",1); 		
-		AddVal("Johnny",2);
-		AddVal("Depp",2);
-
-		DeleteVal(3);
-				equals(flyMem[3].name,"Jack","Captain deleted and now its" );			
-				equals(flyMem[3].prevNode,null,"Jack prevNode now points to null" );
-				equals(flyMem[1].name,"Fictional","Yes its " );
-				equals(flyMem[1].lastNode,5,"Yes its " );
-				equals(flyMem[1].firstChild,4,"Yes its " );
-				equals(flyMem[1].child,2,"Yes its " );
+		AddVal("Randall"); 
+		AddVal("Betty",0); 		
+		AddVal("Charles",0);
+		AddVal("David",0);
+		AddVal("Rebecca",2);
+		AddVal("Thomas",4);		
+		AddVal("Frank",4);
+ 		
+		AddVal("Sam",3);
+		AddVal("Sophia",3);
+		AddVal("Sophia",7);
+		
+		// Delete Charles
+		
+		DeleteVal(2);
+				equals(flyMem[2].parent,null,"parent is null for Charles");
+				equals(flyMem[2].name,"Charles","Charles it is" );	
+				equals(flyMem[2].firstChild,null,"firstChild is null for Charles");
+				equals(flyMem[2].nextNode,null,"nextNode is null for Charles");		
+				equals(flyMem[2].prevNode,null,"prevNode is null for Charles" );		
+				equals(flyMem[2].lastNode,null,"lastNode is null for Charles" );		
+				equals(flyMem[2].child,null,"child is null for Charles" );				
+				equals(flyMem[0].name,"Randall","Yes its Randall " );
+				equals(flyMem[0].lastNode,3,"Yes Randalls right most child is 3 " );
+				equals(flyMem[0].child,2,"No. of children with Randall is 2 " );
+					
+				
 		});		
 		// function to add node to tree
 		function AddVal(txtMemName,parentVal)
@@ -119,7 +125,6 @@
 			{
 				var val_parent = ($( "#selectParent option:selected" ).val()) ? $( "#selectParent option:selected" ).val()  : parentVal ;	
 				flyMem[i-1].parent =  val_parent ;
-				alert(flyMem[i-1].parent + flyMem[i-1].name);
 				flyMem[i-1].key = i-1;
 				flyMem[val_parent].child +=1;
 				
@@ -134,35 +139,70 @@
 		}
 		
 		function DeleteVal(id_flyMem){
-		if(!flyMem[id_flyMem]){
+		
+			if(!flyMem[id_flyMem]){
 				
 				$(".div_warn").append("Delete opereation Cannot work with empty dropDown");
 				console.warn("Delete opeartion Cannot work with empty dropDown");
 				return;
 			}
-			var n_child = flyMem[id_flyMem].child; 
+			n_child = flyMem[id_flyMem].child ;	
 			if(n_child != 0)
-			{	
-				DeleteLastNode(id_flyMem);			
+			{
+				for(var k = 0;  k < n_child; k++)
+				{
+					var cur_id =flyMem[id_flyMem].lastNode;
+					if(flyMem[cur_id].child)
+					{
+						DeleteVal(cur_id);
+					}
+						
+					if(flyMem[cur_id].nextNode)
+					{
+						flyMem[flyMem[cur_id].nextNode].prevNode = flyMem[cur_id].prevNode; 
+				
+					
+					}
+					
+					if(flyMem[cur_id].prevNode)
+					{
+						flyMem[flyMem[cur_id].prevNode].nextNode = flyMem[cur_id].nextNode; 
+					
+					}							
+					
+					if(flyMem[flyMem[cur_id].parent].child >0)
+						flyMem[flyMem[cur_id].parent].child -= 1;
+					
+				}
 			}		
+				if(flyMem[id_flyMem].nextNode)
+					{
+						flyMem[flyMem[id_flyMem].nextNode].prevNode = flyMem[id_flyMem].prevNode; 
+						
+					}
+					
+					if(flyMem[id_flyMem].prevNode)
+					{
+						flyMem[flyMem[id_flyMem].prevNode].nextNode = flyMem[id_flyMem].nextNode; 
+					
+					}
+						
+					if(flyMem[flyMem[id_flyMem].parent].child >0)
+						flyMem[flyMem[id_flyMem].parent].child -= 1;
+						
+			flyMem[id_flyMem].nextNode = null;
+			flyMem[id_flyMem].prevNode = null;
+			flyMem[id_flyMem].firstChild = null;
+			flyMem[id_flyMem].lastNode = null;
+			flyMem[id_flyMem].child = null;
+			
+			
+					
+									
+				
 			$(".div_warn").append("<p>" + flyMem[id_flyMem].name  +" has been deleted</p>");
-			// decrement child count in parent by 1
-			if(flyMem[id_flyMem].parent) flyMem[flyMem[id_flyMem].parent].child -=1;
-			if(flyMem[id_flyMem].nextNode) flyMem[flyMem[id_flyMem].prevNode].nextNode = flyMem[id_flyMem].nextNode;
-			if(flyMem[id_flyMem].prevNode )  flyMem[flyMem[id_flyMem].nextNode].prevNode = flyMem[id_flyMem].prevNode;
- 			flyMem[flyMem[id_flyMem].parent].lastNode = flyMem[id_flyMem].prevNode;
-			// empty array element
-			flyMem.splice(id_flyMem,1);
 		}
-		
-		function DeleteLastNode(id)
-		{
-		
-			DeleteVal(flyMem[id].lastNode );
-			
-			
-		}
-		
+				
 		function RenameVal(txtMemName)
 		{
 			var id_flyMem = $("#selectParent").val();
