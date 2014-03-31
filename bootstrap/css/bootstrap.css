@@ -19,6 +19,10 @@ nav,
 section {
   display: block;
 }
+
+body {
+   background:white !important;
+}
 audio,
 canvas,
 video {

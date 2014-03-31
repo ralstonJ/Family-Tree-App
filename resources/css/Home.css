@@ -6,6 +6,12 @@ font-weight: 300;
 color:red;
 }
 
+input[type="text"]
+{    
+        padding:12px;
+        font-size:18px;
+}
+
 
 #div_txt{
 font-family: 'Lato', sans-serif;

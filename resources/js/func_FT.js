@@ -34,7 +34,7 @@
 			
 			$("#div_display").empty();
 			var cnt_no_of_elements =0;
-				$("#table_control").append("<div id='div_display'></div><table id='list_people' class='table-striped'><tr><th>Name</th><th>Parent</th><th>No. of Children</th><th>First Child</th><th>Last Node</th><th>Right Node</th><th>Left Node</th></tr>");
+				$("#table_control").append("<div id='div_display'></div><table id='list_people' class='table-striped table-striped'><tr><th>Name</th><th>Parent</th><th>No. of Children</th><th>First Child</th><th>Last Node</th><th>Right Node</th><th>Left Node</th></tr>");
 			
 				for(var key = 0; key<flyMem.length;key++){
 				
