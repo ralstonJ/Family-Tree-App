@@ -23,7 +23,8 @@
 			this.child = 0;
 
 		}
-
+		
+		
 			// function to clear objects from <select> and re-load. Also clear Textbox
 		function ClearVal()
 		{
@@ -47,54 +48,7 @@
 			$("input").val('');
 		}
 
-		//Qunit Test -- Delete
-		module("Test for Delete elements");
-		test("",25,function(){
-		
-		AddVal("Randall"); 
-		AddVal("Betty",0); 		
-		AddVal("Charles",0);
-		AddVal("David",0);
-		equals(flyMem[3].name,"David","Yes its david " );
-		equals(flyMem[2].name,"Charles","Yes its Charles " );
-		equals(flyMem[2].nextNode,3,"Yes its Charles nextnode" );
-				
-		AddVal("Rebeca",2);
-		AddVal("Thomas",4);		
-		AddVal("Frank",4);
- 		
-		AddVal("Sam",3);
-		AddVal("Sophia",3);
-		AddVal("Mary",7);
-		
-		// Delete Charles
-		
-		DeleteVal(2);
-				equals(flyMem[0].name,"Randall","Yes its Randall " );
-				equals(flyMem[0].lastNode,3,"Yes Randalls right most child is 3 " );
-				equals(flyMem[0].child,2,"No. of children with Randall is 2 " );
-				equals(flyMem[1].parent,0,"parent is 0 for Betty");
-				equals(flyMem[1].name,"Betty","Betty it is" );	
-				equals(flyMem[1].firstChild,null,"firstChild is null for Betty");
-				equals(flyMem[1].nextNode,3,"nextNode is 3 for Betty");		
-				equals(flyMem[1].prevNode,null,"prevNode is null for Betty" );		
-				equals(flyMem[1].lastNode,null,"lastNode is null for Betty" );		
-				equals(flyMem[1].child,0,"child is null for Betty" );				
-				equals(flyMem[1].parent,0,"parent is 0 for Betty");
-				equals(flyMem[2],null,"Charles is null");
-				equals(flyMem[3].name,"David","David it is" );	
-				equals(flyMem[3].firstChild,7,"firstChild is 7 for David");
-				equals(flyMem[3].nextNode,null,"nextNode is null for David");		
-				equals(flyMem[3].prevNode,1,"prevNode is 1 for David" );		
-				equals(flyMem[3].lastNode,8,"lastNode is 8 for David" );		
-				equals(flyMem[3].child,2,"child is 2 for David" );				
-				equals(flyMem[4],null,"Rebecca is null");
-				equals(flyMem[5],null,"Thomas is null");
-				equals(flyMem[6],null,"Frank is null");
-				equals(flyMem[3].name,"David","David exists");
-				
-		});		
-		// function to add node to tree
+
 		function AddVal(txtMemName,parentVal)
 		{
 
@@ -216,7 +170,7 @@
 
 		}
 		
-		
+
 		$("#btn_Position").click(function(){
 			$(".div_warn").empty();
 			var id_flyMem = $("#selectParent").val();

@@ -1,0 +1,24 @@
+<select>
+	<?php
+	$con=mysqli_connect("localhost","root","","mysql");
+	
+	// Check connection
+	if (mysqli_connect_errno())
+	{
+	echo "Failed to connect to MySQL: " . mysqli_connect_error();
+	}
+	
+	$result = mysqli_query($con,"SELECT * FROM Persons");
+	
+	while($row = mysqli_fetch_array($result))
+	{
+	?>
+	
+	<option value=<?php $row[0] ?>>
+	<?php echo $row[1]; ?>
+	</option>
+	<?php 
+	}  
+	mysqli_close($con);
+	?>
+</select>
