@@ -92,7 +92,7 @@
 				equals(flyMem[5],null,"Thomas is null");
 				equals(flyMem[6],null,"Frank is null");
 				equals(flyMem[3].name,"David","David exists");
-				
+			ClearVal();	
 		});	
 
 		function AddVal(txtMemName,parentVal)
@@ -236,6 +236,7 @@
 			$(".div_warn").empty();
 			var txtMemName = $('input:text[id="txtMemName"]').val();
 			AddVal(txtMemName);
+			
 			ClearVal();
 		});
 		
