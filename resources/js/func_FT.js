@@ -30,20 +30,24 @@
 		{
 			$(".tr_remove" ).remove();
 			$("select").empty();
-			$(".div_display").empty();
+			$("#table_control" ).empty();
+			
+			$("#div_display").empty();
 			var cnt_no_of_elements =0;
-			for(var key = 0; key<flyMem.length;key++){
+				$("#table_control").append("<div id='div_display'></div><table id='list_people' class='table-striped'><tr><th>Name</th><th>Parent</th><th>No. of Children</th><th>First Child</th><th>Last Node</th><th>Right Node</th><th>Left Node</th></tr>");
+			
+				for(var key = 0; key<flyMem.length;key++){
 				
-				if(flyMem[key]!= null)
+			 	if(flyMem[key]!= null)
 				{
 					cnt_no_of_elements ++;	
 					$("select").append("<option value='"+key+"'>"+ flyMem[key].name +"</option>");
 					
-					$("#list_people tr:last").after("<tr class='tr_remove'><td> " + flyMem[key].name + "</td><td>" + flyMem[key].parent + "</td><td>" + flyMem[key].child + "</td><td>" + flyMem[key].firstChild + "</td><td>" + flyMem[key].lastNode + "</td><td>" + flyMem[key].nextNode + "</td><td>" + flyMem[key].prevNode +"</td></tr>");	
+					$("#list_people tr:last").after("<tr id='tr_remove'><td> " + flyMem[key].name + "</td><td>" + flyMem[key].parent + "</td><td>" + flyMem[key].child + "</td><td>" + flyMem[key].firstChild + "</td><td>" + flyMem[key].lastNode + "</td><td>" + flyMem[key].nextNode + "</td><td>" + flyMem[key].prevNode +"</td></tr>");	
 				}
 			}
-			
-			$(".div_display").append("<p>Number of elements in the list " + cnt_no_of_elements +"</p>");	
+				$("#table_control").append("</table>");
+			$("#div_display").append("<p>Number of elements in the list <span class='badge badge-inverse'> " + cnt_no_of_elements +"</span></p>");	
 		
 			$("input").val('');
 		}
@@ -101,7 +105,7 @@
 			if(!txtMemName)
 			{
 
-				$(".div_warn").prepend("<p>Valid Name must be entered in Textbox</p>");	
+				$("#div_warn").prepend("<p>Valid Name must be entered in Textbox</p>");	
 				console.warn("Valid Name must be entered in Textbox");
 				return;
 			}
@@ -163,16 +167,15 @@
 			flyMem[id].firstChild = null;
 			flyMem[id].lastNode = null;
 			flyMem[id].child = null;
-			$(".div_warn").append("<p>" + flyMem[id].name  +" has been deleted</p>");
+			$("#div_warn").append("<div id='div_p' class='alert alert-success'>" + flyMem[id].name  +" has been deleted</div>");
 			flyMem[id] = null;
 			console.log("deleted successfully " + id);
 		}
-		
 		function DeleteVal(id_flyMem)
 		{
 			if(!flyMem[id_flyMem]){
 				
-				$(".div_warn").append("Delete opereation Cannot work with empty dropDown");
+				$("#div_warn").append("Delete opereation Cannot work with empty dropDown");
 				console.warn("Delete opeartion Cannot work with empty dropDown");
 				return;
 			}
@@ -202,6 +205,7 @@
 			AssignNull(id_flyMem);			
 		}
 				
+			
 		function RenameVal(txtMemName)
 		{
 			var id_flyMem = $("#selectParent").val();
@@ -211,29 +215,29 @@
 				return;
 			}
 			
-			$(".div_warn").append("Cannot work with empty Textbox or empty dropDown");
+			$("#div_warn").append("Cannot work with empty Textbox or empty dropDown");
 			console.warn("Cannot work with empty Textbox or empty dropDown");
 
 		}
 		
 
 		$("#btn_Position").click(function(){
-			$(".div_warn").empty();
+			$("#div_warn").empty();
 			var id_flyMem = $("#selectParent").val();
 			if(id_flyMem)
 			{
-				$(".div_warn").append("<p>Position of " + flyMem[id_flyMem].name + " : " + id_flyMem + "</p>");
+				$("#div_warn").append("<p>Position of " + flyMem[id_flyMem].name + " : " + id_flyMem + "</p>");
 				return;
 			}
 			
-			$(".div_warn").append("Position button Cannot work with empty Textbox or empty dropDown");
+			$("#div_warn").append("Position button Cannot work with empty Textbox or empty dropDown");
 			console.warn("Position button Cannot work with empty Textbox or empty dropDown");
 			
 			
 		});
 		$("#btn_Add").click(function(){
 			
-			$(".div_warn").empty();
+			$("#div_warn").empty();
 			var txtMemName = $('input:text[id="txtMemName"]').val();
 			AddVal(txtMemName);
 			
@@ -242,7 +246,7 @@
 		
 		$("#btn_Rename").click(function(){
 			
-			$(".div_warn").empty();
+			$("#div_warn").empty();
 			var txtMemName = $('input:text[id="txtMemName"]').val();
 			RenameVal(txtMemName);
 			ClearVal();
@@ -251,7 +255,7 @@
 	  
 	  
 		$("#btn_Delete").click(function(){
-			$(".div_warn").empty();
+			$("#div_warn").empty();
 			var id_flyMem = $("#selectParent").val();
 			DeleteVal(id_flyMem);
 			ClearVal();
@@ -260,11 +264,11 @@
 		
 		$("#btn_Get_Grand_Node").click(function(){
 			
-			$(".div_warn").empty();
+			$("#div_warn").empty();
 			var id_flyMem = $("#selectParent").val();
 			if(!flyMem[id_flyMem])
 			{
-				$(".div_warn").append("Get Grand Parent Node Cannot work with empty Textbox or empty dropDown");
+				$("#div_warn").append("Get Grand Parent Node Cannot work with empty Textbox or empty dropDown");
 				console.warn("Get Grand Parent Node Cannot work with empty Textbox or empty dropDown");
 				return;
 			}
@@ -273,14 +277,13 @@
 				
 			if(flyMem[id_flyMem].parent !=null &&flyMem[flyMem[id_flyMem].parent].parent !=null )
 			{		
-				alert("Grand parent exist!");
+			
 				
-				$(".div_display").append("<p>Grand Parent of " +flyMem[id_flyMem].name + " is " + flyMem[flyMem[flyMem[id_flyMem].parent].parent].name + " </p>");
+				$("#div_warn").append("<p class='alert alert-success'> Grand Parent of " +flyMem[id_flyMem].name + " is " + flyMem[flyMem[flyMem[id_flyMem].parent].parent].name + " </p>");
 			
 			}
 			else
-				alert("Grand parent does not exist!");
-			
+				$("#div_warn").append("Grand Parent does not exist");
 		
 		});	
 	  });
@@ -307,6 +310,7 @@
 			ok($("input").empty()," Textbox is empty");		
 			
 			
+	
 			
 		});
 

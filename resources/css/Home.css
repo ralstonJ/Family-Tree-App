@@ -1,5 +1,4 @@
 body {
-background-color: e5e5e5;
 font-family: 'Lato', sans-serif;
 color: #fff;
 text-align: left;
@@ -8,23 +7,18 @@ color:red;
 }
 
 
-.div_txt{
+#div_txt{
 font-family: 'Lato', sans-serif;
 color: #fff;
 text-align: left;
 font-weight: 300;
 color:red;
 }
+#div_warn{
 
-.top-div {
-height:800px;
-background-color: #363636;
-}	
-.mid-div {
+width:300px;
 
-
-}	
-.myName{
-
-padding-left:10px;
 }
+
+
+
